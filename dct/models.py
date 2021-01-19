@@ -28,6 +28,10 @@ class DataCollectTerminal(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name_plural = 'ТСД'
+        verbose_name = 'ТСД'
+
 
 class Accumulator(models.Model):
     """Accumulator for Date Collect Terminal"""
@@ -38,3 +42,7 @@ class Accumulator(models.Model):
 
     def __str__(self):
         return self.number
+
+    class Meta:
+        verbose_name_plural = 'Аккумуляторы'
+        verbose_name = 'Аккумулятор'
