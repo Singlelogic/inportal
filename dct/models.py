@@ -19,10 +19,10 @@ class DataCollectTerminal(models.Model):
     serial_number = models.CharField(max_length=50, verbose_name='Серийный номер')
     mac_address = models.CharField(max_length=20, unique=True, db_index=True,
                                    verbose_name='MAC-адрес')
-    user = models.ForeignKey(Profile, null=True, on_delete=models.PROTECT,
-                             verbose_name='Пользователь')
-    accumulator = models.ForeignKey('Accumulator', null=True, on_delete=models.PROTECT,
-                                    verbose_name='Аккумулятор')
+    user = models.ForeignKey(Profile, null=True, blank=True,
+                             on_delete=models.PROTECT, verbose_name='Пользователь')
+    accumulator = models.ForeignKey('Accumulator', null=True, blank=True,
+                                    on_delete=models.PROTECT, verbose_name='Аккумулятор')
     remark = models.TextField(null=True, blank=True, verbose_name='Примечания')
 
     def __str__(self):
@@ -36,7 +36,7 @@ class DataCollectTerminal(models.Model):
 class Accumulator(models.Model):
     """Accumulator for Date Collect Terminal"""
     number = models.CharField(max_length=10, unique=True, db_index=True,
-                            verbose_name='Номер')
+                              verbose_name='Номер')
     date_change = models.DateField(verbose_name='Дата установки')
     remark = models.TextField(null=True, blank=True, verbose_name='Примечания')
 
