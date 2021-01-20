@@ -1,16 +1,54 @@
 {% extends "basic.html" %}
+{% load static %}
 
 {% block content %}
-    {% for dct in dcts %}
-    <div>
-        <h4><a href="{% url 'detail_dct' pk=dct.pk %}">{{ dct.name }}</a></h4>
-        <p>{{ dct.get_model_display }}</p>
-        <p>{{ dct.serial_number }}</p>
-        <p>{{ dct.mac_address }}</p>
-        <p>{{ dct.user }}</p>
-        <p>{{ dct.accumulator }}</p>
-        <p>{{ dct.accumulator.date_change }}</p>
-        <p>{{ dct.remark }}</p>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <h5>Номер</h5>
+            </div>
+            <div class="col-sm">
+                <h5>Модель</h5>
+            </div>
+            <div class="col-sm">
+                <h5>Серийный номер</h5>
+            </div>
+            <div class="col-sm">
+                <h5>Пользователь</h5>
+            </div>
+            <div class="col-sm">
+                <h5>MAC-адрес</h5>
+            </div>
+            <div class="col-sm">
+                <h5>S/N аккумулятора</h5>
+            </div>
+        </div>
     </div>
+
+    {% for dct in dcts %}
+        <div class="container">
+            <div class="row">
+                <div class="col-sm">
+                    <h6><a href="{% url 'detail_dct' pk=dct.pk %}">{{ dct.name }}</a></h6>
+                </div>
+                <div class="col-sm">
+                    <p>{{ dct.get_model_display }}</p>
+                </div>
+                <div class="col-sm">
+                    <p>{{ dct.serial_number }}</p>
+                </div>
+                <div class="col-sm">
+                    <p>{{ dct.user }}</p>
+                </div>
+                <div class="col-sm">
+                    <p>{{ dct.mac_address }}</p>
+                </div>
+                <div class="col-sm">
+                    <p>{{ dct.accumulator }}</p>
+                </div>
+            </div>
+        </div>
     {% endfor %}
+
 {% endblock %}
