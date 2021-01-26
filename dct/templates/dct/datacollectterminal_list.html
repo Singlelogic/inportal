@@ -1,5 +1,8 @@
 {% extends "basic.html" %}
-{% load static %}
+
+{% block title %}
+    {{ datacollectterminal.title }}
+{% endblock %}
 
 {% block content %}
 
@@ -26,7 +29,7 @@
         </div>
     </div>
 
-    {% for dct in dcts %}
+    {% for dct in datacollectterminal_list %}
         <div class="container">
             <div class="row">
                 <div class="col-sm">
