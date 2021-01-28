@@ -26,6 +26,9 @@
             <div class="col-sm">
                 <h5>S/N аккумулятора</h5>
             </div>
+            <div class="col-sm">
+                <h5>Примечания</h5>
+            </div>
         </div>
     </div>
 
@@ -33,7 +36,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm">
-                    <h6><a href="{% url 'detail_dct' pk=dct.pk %}">{{ dct.name }}</a></h6>
+                    <h6><a href="{% url 'update_dct_url' pk=dct.pk %}">{{ dct.name }}</a></h6>
                 </div>
                 <div class="col-sm">
                     <p>{{ dct.get_model_display }}</p>
@@ -50,8 +53,13 @@
                 <div class="col-sm">
                     <p>{{ dct.accumulator }}</p>
                 </div>
+                <div class="col-sm">
+                    <p>{{ dct.remark }}</p>
+                </div>
             </div>
         </div>
     {% endfor %}
+
+    <h6><a href="{% url 'create_dct_url' %}">Добавить ТСД</a></h6>
 
 {% endblock %}

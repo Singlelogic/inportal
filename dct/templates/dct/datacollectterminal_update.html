@@ -1,0 +1,14 @@
+{% extends "basic.html" %}
+
+{% block title %}
+    {{ datacollectterminal.title }}
+{% endblock %}
+
+{% block content %}
+    <h3>Изменение записи</h3>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Сохранить">
+    </form>
+{% endblock %}
