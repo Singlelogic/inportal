@@ -22,7 +22,7 @@ urlpatterns = [
     path('reset/done/', views.PasswordResetCompleteView.as_view(),
          name='password_reset_complete'),
 
-    path('', dashboard, name='dashboard'),
+    path('profile/', dashboard, name='dashboard'),
     path('register/', register, name='register'),
     path('edit/', edit, name='edit'),
 ]
