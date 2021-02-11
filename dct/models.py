@@ -1,7 +1,7 @@
 from django.db import models
 from django.urls import reverse
 
-from account.models import Profile
+from client.models import Client
 
 
 class DataCollectTerminal(models.Model):
@@ -20,7 +20,7 @@ class DataCollectTerminal(models.Model):
     serial_number = models.CharField(max_length=50, verbose_name='Серийный номер')
     mac_address = models.CharField(max_length=20, unique=True, db_index=True,
                                    verbose_name='MAC-адрес')
-    user = models.ForeignKey(Profile, null=True, blank=True,
+    user = models.ForeignKey(Client, null=True, blank=True,
                              on_delete=models.PROTECT, verbose_name='Пользователь')
     accumulator = models.ForeignKey('Accumulator', null=True, blank=True,
                                     on_delete=models.PROTECT, verbose_name='Аккумулятор')

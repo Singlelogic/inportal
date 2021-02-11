@@ -1,0 +1,16 @@
+{% extends "basic.html" %}
+
+{% block title %}
+    {{ client.title }}
+{% endblock %}
+
+{% block content %}
+    <h3>Изменение записи</h3>
+    <form method="post">
+        {% csrf_token %}
+        <table>
+            {{ form.as_table }}
+        </table>
+        <input type="submit" value="Сохранить">
+    </form>
+{% endblock %}

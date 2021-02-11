@@ -1,0 +1,15 @@
+{% extends "basic.html" %}
+
+{% block title %}
+    {{ client.title }}
+{% endblock %}
+
+{% block content %}
+
+    <h6><a href="{% url 'create_user_url' %}">Добавить пользователя</a></h6>
+
+    {% for client in client_list %}
+        <p><a href="{% url 'update_client_url' pk=client.pk %}">{{ client.client }}</a></p>
+    {% endfor %}
+
+{% endblock %}
