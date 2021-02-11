@@ -6,6 +6,8 @@
 
 {% block content %}
 
+    <h6><a href="{% url 'create_dct_url' %}">Добавить ТСД</a></h6>
+
     <div class="container">
         <div class="row">
             <div class="col-sm">
@@ -27,7 +29,7 @@
                 <h5>S/N аккумулятора</h5>
             </div>
             <div class="col-sm">
-                <h5>Примечания</h5>
+                <h5>Примечание</h5>
             </div>
         </div>
     </div>
@@ -59,7 +61,5 @@
             </div>
         </div>
     {% endfor %}
-
-    <h6><a href="{% url 'create_dct_url' %}">Добавить ТСД</a></h6>
 
 {% endblock %}

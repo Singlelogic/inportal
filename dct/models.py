@@ -24,7 +24,7 @@ class DataCollectTerminal(models.Model):
                              on_delete=models.PROTECT, verbose_name='Пользователь')
     accumulator = models.ForeignKey('Accumulator', null=True, blank=True,
                                     on_delete=models.PROTECT, verbose_name='Аккумулятор')
-    remark = models.TextField(null=True, blank=True, verbose_name='Примечания')
+    remark = models.TextField(null=True, blank=True, verbose_name='Примечание')
 
     def __str__(self):
         return self.name

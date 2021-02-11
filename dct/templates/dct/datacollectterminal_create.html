@@ -8,7 +8,9 @@
     <h3>Добавление записи</h3>
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
+        <table>
+            {{ form.as_table }}
+        </table>
         <input type="submit" value="Добавить">
     </form>
 {% endblock %}

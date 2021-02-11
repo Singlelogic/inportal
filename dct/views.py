@@ -2,6 +2,7 @@ from django.urls import reverse_lazy
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView
 
+from .forms import DataCollectTerminalForm
 from .models import DataCollectTerminal
 
 
@@ -23,6 +24,7 @@ class DataCollectTerminalCreateView(CreateView):
     """Create data collection terminal."""
     model = DataCollectTerminal
     template_name = 'dct/datacollectterminal_create.html'
-    fields = ['name', 'model', 'serial_number', 'mac_address', 'user',
-              'accumulator', 'remark']
+    # fields = ['name', 'model', 'serial_number', 'mac_address', 'user',
+    #           'accumulator', 'remark']
+    form_class = DataCollectTerminalForm
     success_url = reverse_lazy('list_dct_url')
