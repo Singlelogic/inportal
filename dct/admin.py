@@ -10,7 +10,7 @@ class DataCollectTerminalAdmin(admin.ModelAdmin):
 
 
 class AccumulatorAdmin(admin.ModelAdmin):
-    list_display = ('number', 'date_change', 'remark')
+    list_display = ('number', 'remark')
 
 
 admin.site.register(DataCollectTerminal, DataCollectTerminalAdmin)
