@@ -11,11 +11,12 @@
         </p>
     {% else %}
         <p>Пожалуйста, используйте следующую форму для входа в систему.</p>
-        <p>Если у Вас нет учетной записи вы можете зарегистрироваться <a href="{% url 'register' %}">здесь</a>.</p>
     {% endif %}
     <div class="login-form">
         <form action="{% url 'login' %}" method="post">
-            {{ form.as_p }}
+            <table>
+                {{ form.as_table }}
+            </table>
             {% csrf_token %}
             <input type="hidden" name="next" value="{{ next }}"/>
             <p><input type="submit" value="Войти"></p>
