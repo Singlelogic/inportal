@@ -30,7 +30,8 @@ class DataCollectTerminalUpdate(UpdateView):
         """
         context = super().get_context_data()
         # print(context['object'].accumulator)
-        context['object'].accumulator.changed_status()
+        if context['object'].accumulator:
+            context['object'].accumulator.changed_status()
         return context
 
 
