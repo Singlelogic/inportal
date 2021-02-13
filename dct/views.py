@@ -21,18 +21,21 @@ class DataCollectTerminalUpdate(UpdateView):
               'accumulator', 'remark']
     success_url = reverse_lazy('list_dct_url')
 
-    def get_context_data(self, **kwargs):
+    def form_valid(self, form):
         """
         Called to change the state of the battery.
         Possible states:
         1. Installed
         2. Uninstalled
         """
-        context = super().get_context_data()
-        # print(context['object'].accumulator)
-        if context['object'].accumulator:
-            context['object'].accumulator.changed_status()
-        return context
+        accum_in_db = DataCollectTerminal.objects.get(id=self.object.id).accumulator
+        accum_in_form = self.object.accumulator
+        if accum_in_db != accum_in_form:
+            if accum_in_db:
+                accum_in_db.changed_status(2)
+            else:
+                accum_in_form.changed_status(1)
+        return super().form_valid(form)
 
 
 class DataCollectTerminalCreateView(CreateView):

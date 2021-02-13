@@ -50,14 +50,14 @@ class Accumulator(models.Model):
         verbose_name_plural = 'Аккумуляторы'
         verbose_name = 'Аккумулятор'
 
-    def changed_status(self):
+    def changed_status(self, state):
         """
         Changing the battery status.
         Possible states:
         1. Installed
         2. Uninstalled
         """
-        AccumulatorDate.objects.create(state=1, accumulator=self)
+        AccumulatorDate.objects.create(state=state, accumulator=self)
 
 
 class AccumulatorDate(models.Model):
