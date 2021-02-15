@@ -76,4 +76,4 @@ class AccumulatorDate(models.Model):
                                     verbose_name='Дата изменения состояния')
 
     def __str__(self):
-        return f'{self.accumulator}: {self.state} - {self.date}'
+        return f'{self.accumulator}: {self.state} - {self.date.strftime("%Y.%m.%d %I:%M")}'
