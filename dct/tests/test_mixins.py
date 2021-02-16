@@ -132,22 +132,75 @@ class ModifiedMethodFormValidMiximTest(TestCase):
         result = DataCollectTerminalRemark.objects.filter(id=3)
         self.assertEqual(bool(result), False)
 
-    # def test_is_write_db_when_first_change_remakr_dct(self):
-    #     """
-    #     Checking whether an entry is created in the remarks database
-    #     on the first change remark's terminal.
-    #     """
-    #     self.client.post(reverse('update_dct_url', kwargs={'pk': 1}),
-    #                      {'name': 'ТСД-2', 'serial_number': 435406234746,
-    #                       'model': 1, 'mac_address': '43:ac:34:db:53:af',
-    #                       'accumulator': 2, 'remark': 'TEST 1'})
-    #     new_obj1 = DataCollectTerminalRemark.objects.get(id=1)
-    #     new_obj2 = DataCollectTerminalRemark.objects.get(id=2)
-    #     result = [new_obj1.data_collect_terminal, new_obj1.remark,
-    #               new_obj1.date.strftime('%Y.%m.%d %I:%M'),
-    #               new_obj2.data_collect_terminal, new_obj2.remark,
-    #               new_obj2.date.strftime('%Y.%m.%d %I:%M')]
-    #     dct1 = DataCollectTerminal.objects.get(id=1)
-    #     expected = [dct1, 'TEST', '2021.02.15 09:21',
-    #                 dct1, 'TEST 1', datetime.today().strftime('%Y.%m.%d %I:%M')]
-    #     self.assertEqual(result, expected)
+    def test_is_write_db_first_change(self):
+        """
+        Checking whether an entry is created in the remarks database
+        on the first change remark's terminal.
+        """
+        self.client.post(reverse('create_dct_url'),
+                         {'name': 'ТСД-3', 'serial_number': 435406234747,
+                          'model': 1, 'mac_address': '43:ac:34:db:53:a1',
+                          'remark': 'TEST'})
+        self.client.post(reverse('update_dct_url', kwargs={'pk': 3}),
+                         {'name': 'ТСД-3', 'serial_number': 435406234747,
+                          'model': 1, 'mac_address': '43:ac:34:db:53:a1',
+                          'remark': 'TEST 1'})
+        new_obj1 = DataCollectTerminalRemark.objects.get(id=3)
+        new_obj2 = DataCollectTerminalRemark.objects.get(id=4)
+        result = [new_obj1.data_collect_terminal, new_obj1.remark,
+                  new_obj1.date.strftime('%Y.%m.%d %I:%M'),
+                  new_obj2.data_collect_terminal, new_obj2.remark,
+                  new_obj2.date.strftime('%Y.%m.%d %I:%M')]
+        dct3 = DataCollectTerminal.objects.get(id=3)
+        expected = [dct3, 'TEST', datetime.today().strftime('%Y.%m.%d %I:%M'),
+                    dct3, 'TEST 1', datetime.today().strftime('%Y.%m.%d %I:%M')]
+        self.assertEqual(result, expected)
+
+    def test_is_write_db_first_change_empty(self):
+        """
+        Checking whether a record has been created in the remarks database
+        on the terminal of the first remark change,
+        if the first remark was empty.
+        """
+        self.client.post(reverse('update_dct_url', kwargs={'pk': 2}),
+                         {'name': 'ТСД-2', 'serial_number': 435406234746,
+                          'model': 1, 'mac_address': '43:ac:34:db:53:af',
+                          'remark': 'TEST'})
+        new_obj = DataCollectTerminalRemark.objects.get(id=3)
+        result = [new_obj.data_collect_terminal, new_obj.remark,
+                  new_obj.date.strftime('%Y.%m.%d %I:%M')]
+        dct2 = DataCollectTerminal.objects.get(id=2)
+        expected = [dct2, 'TEST', datetime.today().strftime('%Y.%m.%d %I:%M')]
+        self.assertEqual(result, expected)
+
+    def test_is_write_db_change_remark(self):
+        """
+        Checking whether an entry has been created in the renarks database
+        on the remark editing terminal
+        """
+        self.client.post(reverse('update_dct_url', kwargs={'pk': 1}),
+                         {'name': 'ТСД-1', 'serial_number': 435406234745,
+                          'model': 1, 'mac_address': '43:ac:34:db:53:ae',
+                          'remark': 'TEST 2'})
+        old_obj = DataCollectTerminalRemark.objects.get(id=2)
+        new_obj = DataCollectTerminalRemark.objects.get(id=3)
+        result = [old_obj.data_collect_terminal, old_obj.remark,
+                  old_obj.date.strftime('%Y.%m.%d %I:%M'),
+                  new_obj.data_collect_terminal, new_obj.remark,
+                  new_obj.date.strftime('%Y.%m.%d %I:%M')]
+        dct = DataCollectTerminal.objects.get(id=1)
+        expected = [dct, 'TEST 1', '2021.02.16 01:46',
+                    dct, 'TEST 2', datetime.today().strftime('%Y.%m.%d %I:%M')]
+        self.assertEqual(result, expected)
+
+    def test_is_write_db_change_tcd(self):
+        """
+        Checking whether an entry was created in the remarks database when
+        editing the terminal but without changing the remarks.
+        """
+        self.client.post(reverse('update_dct_url', kwargs={'pk': 1}),
+                         {'name': 'ТСД-1', 'serial_number': 435406234745,
+                          'model': 1, 'mac_address': '43:ac:34:db:53:ae',
+                          'remark': 'TEST 1', 'accumulator': 1})
+        result = DataCollectTerminalRemark.objects.filter(id=3)
+        self.assertEqual(bool(result), False)
