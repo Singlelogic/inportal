@@ -25,6 +25,7 @@ class DataCollectTerminal(models.Model):
     accumulator = models.ForeignKey('Accumulator', null=True, blank=True,
                                     on_delete=models.PROTECT, verbose_name='Аккумулятор')
     remark = models.TextField(null=True, blank=True, verbose_name='Примечание')
+    date = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
 
     def __str__(self):
         return self.name
@@ -35,6 +36,18 @@ class DataCollectTerminal(models.Model):
     class Meta:
         verbose_name_plural = 'ТСД'
         verbose_name = 'ТСД'
+
+
+class DataCollectTerminalRemark(models.Model):
+    """Remark for data collect terminal."""
+    data_collect_terminal = models.ForeignKey(DataCollectTerminal, null=True,
+                                              blank=True, on_delete=models.CASCADE)
+    remark = models.TextField(null=True, blank=True, verbose_name='Примечание')
+    date = models.DateTimeField(verbose_name='Дата')
+
+    def __str__(self):
+        return f'{self.data_collect_terminal}: {self.remark} - ' \
+               f'{self.date.strftime("%Y.%m.%d %I:%M")}'
 
 
 class Accumulator(models.Model):
