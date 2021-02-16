@@ -4,7 +4,7 @@ from django.views.generic.edit import ModelFormMixin
 from .models import DataCollectTerminal, DataCollectTerminalRemark
 
 
-class ChangedStatusAccum(ModelFormMixin):
+class ModifiedMethodFormValidMixim(ModelFormMixin):
     """
     Extension when creating and updating a terminal to change the battery status.
     """

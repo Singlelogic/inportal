@@ -3,7 +3,7 @@ from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView
 
 from .forms import DataCollectTerminalForm
-from .mixins import ChangedStatusAccum
+from .mixins import ModifiedMethodFormValidMixim
 from .models import (
     DataCollectTerminal, Accumulator, AccumulatorDate
 )
@@ -14,7 +14,7 @@ class DataCollectTerminalListView(ListView):
     model = DataCollectTerminal
 
 
-class DataCollectTerminalUpdate(ChangedStatusAccum, UpdateView):
+class DataCollectTerminalUpdate(ModifiedMethodFormValidMixim, UpdateView):
     """Update the selected data collection terminal."""
     model = DataCollectTerminal
     template_name = 'dct/datacollectterminal_update.html'
@@ -23,7 +23,7 @@ class DataCollectTerminalUpdate(ChangedStatusAccum, UpdateView):
     success_url = reverse_lazy('list_dct_url')
 
 
-class DataCollectTerminalCreateView(ChangedStatusAccum, CreateView):
+class DataCollectTerminalCreateView(ModifiedMethodFormValidMixim, CreateView):
     """Create data collection terminal."""
     model = DataCollectTerminal
     template_name = 'dct/datacollectterminal_create.html'
