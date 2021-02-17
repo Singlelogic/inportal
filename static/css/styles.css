@@ -8,6 +8,10 @@
   flex: 1;
 }
 
-.text {
+.layer{
+    margin-left: 1%;
+}
 
+.logout{
+    max-width:25px;
 }
