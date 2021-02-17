@@ -72,7 +72,7 @@ class Accumulator(models.Model):
         """
         Method for getting the absolute path of an instance.
         """
-        return reverse('update_dct_url', kwargs={'pk': self.pk})
+        return reverse('update_accumulator_url', kwargs={'pk': self.pk})
 
     def changed_status(self, state):
         """
