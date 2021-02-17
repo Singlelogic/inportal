@@ -36,17 +36,17 @@ class DataCollectTerminalDeleteView(DeleteView):
     success_url = reverse_lazy('list_dct_url')
 
 
-class AccumulatorListView(ListView):
-    """Output a list of accumulators."""
-    model = Accumulator
-
-
 class AccumulatorCreateView(CreateView):
     """Create accumulator."""
     model = Accumulator
     template_name = 'dct/accumulator_create.html'
     fields = ['number', 'remark']
     success_url = reverse_lazy('list_accumulator_url')
+
+
+class AccumulatorListView(ListView):
+    """Output a list of accumulators."""
+    model = Accumulator
 
 
 class AccumulatorUpdateView(UpdateView):
