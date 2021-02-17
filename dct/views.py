@@ -4,17 +4,13 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from .forms import DataCollectTerminalForm
 from .mixins import ModifiedMethodFormValidMixim
-from .models import (
-    DataCollectTerminal, Accumulator, AccumulatorDate
-)
+from .models import DataCollectTerminal, Accumulator
 
 
 class DataCollectTerminalCreateView(ModifiedMethodFormValidMixim, CreateView):
     """Create data collection terminal."""
     model = DataCollectTerminal
     template_name = 'dct/datacollectterminal_create.html'
-    # fields = ['name', 'model', 'serial_number', 'mac_address', 'user',
-    #           'accumulator', 'remark']
     form_class = DataCollectTerminalForm
     success_url = reverse_lazy('list_dct_url')
 
@@ -58,4 +54,11 @@ class AccumulatorUpdateView(UpdateView):
     model = Accumulator
     template_name = 'dct/accumulator_update.html'
     fields = ['number', 'remark']
+    success_url = reverse_lazy('list_accumulator_url')
+
+
+class AccumulatorDeleteView(DeleteView):
+    """Delete accumulator."""
+    model = Accumulator
+    template_name = 'dct/accumulator_delete.html'
     success_url = reverse_lazy('list_accumulator_url')

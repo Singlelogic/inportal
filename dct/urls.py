@@ -2,6 +2,7 @@ from django.urls import path
 
 from .views import (
     AccumulatorCreateView, AccumulatorListView, AccumulatorUpdateView,
+    AccumulatorDeleteView,
     DataCollectTerminalCreateView, DataCollectTerminalDeleteView, DataCollectTerminalListView,
     DataCollectTerminalUpdate,
 )
@@ -16,4 +17,5 @@ urlpatterns = [
     path('create_accumulator/', AccumulatorCreateView.as_view(), name='create_accumulator_url'),
     path('list_accumulator', AccumulatorListView.as_view(), name='list_accumulator_url'),
     path('update_accumulator/<int:pk>/', AccumulatorUpdateView.as_view(), name='update_accumulator_url'),
+    path('delete_accumulator/<int:pk>/', AccumulatorDeleteView.as_view(), name='delete_accumulator_url'),
 ]

@@ -54,12 +54,6 @@ class DataCollectTerminalRemark(models.Model):
         return f'{self.data_collect_terminal}: {self.remark} - ' \
                f'{self.date.strftime("%Y.%m.%d %I:%M")}'
 
-    def get_absolute_url(self):
-        """
-        Method for getting the absolute path of an instance.
-        """
-        return reverse('update_dct_url', kwargs={'slug': self.slug})
-
 
 class Accumulator(models.Model):
     """Accumulator for Date Collect Terminal"""
@@ -73,6 +67,12 @@ class Accumulator(models.Model):
     class Meta:
         verbose_name_plural = 'Аккумуляторы'
         verbose_name = 'Аккумулятор'
+
+    def get_absolute_url(self):
+        """
+        Method for getting the absolute path of an instance.
+        """
+        return reverse('update_dct_url', kwargs={'pk': self.pk})
 
     def changed_status(self, state):
         """
