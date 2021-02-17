@@ -1,7 +1,7 @@
 {% extends "basic.html" %}
 
 {% block title %}
-    {{ datacollectterminal.title }}
+    {{ datacollectterminal.name }}
 {% endblock %}
 
 {% block content %}
@@ -11,6 +11,8 @@
         <table>
             {{ form.as_table }}
         </table>
-        <input type="submit" value="Сохранить">
+        <input type="submit" value="Сохранить" class="btn btn-secondary">
+        <a href="{% url 'list_dct_url' %}" class="btn btn-secondary">Назад</a>
+        <a href="{% url 'delete_dct_url' pk=object.pk %}" class="btn btn-danger">Удалить</a>
     </form>
 {% endblock %}

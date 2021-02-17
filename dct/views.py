@@ -1,12 +1,22 @@
 from django.urls import reverse_lazy
 from django.views.generic.list import ListView
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from .forms import DataCollectTerminalForm
 from .mixins import ModifiedMethodFormValidMixim
 from .models import (
     DataCollectTerminal, Accumulator, AccumulatorDate
 )
+
+
+class DataCollectTerminalCreateView(ModifiedMethodFormValidMixim, CreateView):
+    """Create data collection terminal."""
+    model = DataCollectTerminal
+    template_name = 'dct/datacollectterminal_create.html'
+    # fields = ['name', 'model', 'serial_number', 'mac_address', 'user',
+    #           'accumulator', 'remark']
+    form_class = DataCollectTerminalForm
+    success_url = reverse_lazy('list_dct_url')
 
 
 class DataCollectTerminalListView(ListView):
@@ -23,13 +33,10 @@ class DataCollectTerminalUpdate(ModifiedMethodFormValidMixim, UpdateView):
     success_url = reverse_lazy('list_dct_url')
 
 
-class DataCollectTerminalCreateView(ModifiedMethodFormValidMixim, CreateView):
-    """Create data collection terminal."""
+class DataCollectTerminalDeleteView(DeleteView):
+    """Delete data collection terminal."""
     model = DataCollectTerminal
-    template_name = 'dct/datacollectterminal_create.html'
-    # fields = ['name', 'model', 'serial_number', 'mac_address', 'user',
-    #           'accumulator', 'remark']
-    form_class = DataCollectTerminalForm
+    template_name = 'dct/datacollectterminal_delete.html'
     success_url = reverse_lazy('list_dct_url')
 
 

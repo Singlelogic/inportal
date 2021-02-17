@@ -1,0 +1,17 @@
+{% extends "basic.html" %}
+
+{% block title %}
+    {{ datacollectterminal.name }}
+{% endblock %}
+
+{% block content %}
+    <h3>Удаление записи</h3>
+    <form method="post">
+        {% csrf_token %}
+
+        <h5>Вы действительно хотите удалить <b>'{{ datacollectterminal.name|upper }}'</b>?</h5>
+        <a href="{{ datacollectterminal.get_absolute_url }}" class="btn btn-secondary">Отмена</a>
+        <button type="submit" name="buttom" class="btn btn-danger">Удалить</button>
+
+    </form>
+{% endblock %}

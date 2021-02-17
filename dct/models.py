@@ -31,6 +31,9 @@ class DataCollectTerminal(models.Model):
         return self.name
 
     def get_absolute_url(self):
+        """
+        Method for getting the absolute path of an instance.
+        """
         return reverse('update_dct_url', kwargs={'pk': self.pk})
 
     class Meta:
@@ -39,7 +42,9 @@ class DataCollectTerminal(models.Model):
 
 
 class DataCollectTerminalRemark(models.Model):
-    """Remark for data collect terminal."""
+    """
+    Remark for data collect terminal.
+    """
     data_collect_terminal = models.ForeignKey(DataCollectTerminal, null=True,
                                               blank=True, on_delete=models.CASCADE)
     remark = models.TextField(null=True, blank=True, verbose_name='Примечание')
@@ -48,6 +53,12 @@ class DataCollectTerminalRemark(models.Model):
     def __str__(self):
         return f'{self.data_collect_terminal}: {self.remark} - ' \
                f'{self.date.strftime("%Y.%m.%d %I:%M")}'
+
+    def get_absolute_url(self):
+        """
+        Method for getting the absolute path of an instance.
+        """
+        return reverse('update_dct_url', kwargs={'slug': self.slug})
 
 
 class Accumulator(models.Model):
