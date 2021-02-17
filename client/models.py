@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 
 class Client(models.Model):
@@ -8,3 +9,9 @@ class Client(models.Model):
 
     def __str__(self):
         return self.client
+
+    def get_absolute_url(self):
+        """
+        Method for getting the absolute path of an instance.
+        """
+        return reverse('update_client_url', kwargs={'pk': self.pk})

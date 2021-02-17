@@ -1,0 +1,14 @@
+{% extends "basic.html" %}
+
+{% block title %}
+{% endblock %}
+
+{% block content %}
+    <h3>Удаление записи</h3>
+    <form method="post">
+        {% csrf_token %}
+        <h5>Вы действительно хотите удалить пользователя {{ client.client|title }}?</h5>
+        <a href="{{ client.get_absolute_url }}" class="btn btn-secondary">Отмена</a>
+        <button type="submit" name="buttom" class="btn btn-danger">Удалить</button>
+    </form>
+{% endblock %}
