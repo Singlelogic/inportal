@@ -8,8 +8,50 @@
 
     <h6><a href="{% url 'create_client_url' %}">Добавить пользователя</a></h6>
 
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <h5>Пользователь</h5>
+            </div>
+            <div class="col-sm">
+            </div>
+            <div class="col-sm">
+            </div>
+            <div class="col-sm">
+            </div>
+            <div class="col-sm">
+            </div>
+            <div class="col-sm">
+            </div>
+            <div class="col-sm">
+            </div>
+            <div class="col-sm">
+            </div>
+        </div>
+    </div>
+
     {% for client in client_list %}
-        <p><a href="{% url 'update_client_url' pk=client.pk %}">{{ client.client }}</a></p>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm">
+                    <h6><a href="{% url 'update_client_url' pk=client.pk %}">{{ client.client }}</a></h6>
+                </div>
+                <div class="col-sm">
+                </div>
+                <div class="col-sm">
+                </div>
+                <div class="col-sm">
+                </div>
+                <div class="col-sm">
+                </div>
+                <div class="col-sm">
+                </div>
+                <div class="col-sm">
+                </div>
+                <div class="col-sm">
+                </div>
+            </div>
+        </div>
     {% endfor %}
 
 {% endblock %}
