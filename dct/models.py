@@ -21,15 +21,18 @@ class DataCollectTerminal(models.Model):
                                      verbose_name='Серийный номер')
     mac_address = models.CharField(max_length=20, unique=True, db_index=True,
                                    verbose_name='MAC-адрес')
-    user = models.OneToOneField(Client, null=True, blank=True, unique=True,
+    user = models.OneToOneField(Client, null=True, blank=True,
                                 on_delete=models.PROTECT, verbose_name='Пользователь')
-    accumulator = models.OneToOneField('Accumulator', null=True, blank=True, unique=True,
+    accumulator = models.OneToOneField('Accumulator', null=True, blank=True,
                                        on_delete=models.PROTECT, verbose_name='Аккумулятор')
     remark = models.TextField(null=True, blank=True, verbose_name='Примечание')
     date = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
 
     def __str__(self):
         return self.name
+
+    def __gt__(self, other):
+        return int(self.name[4:]) > int(other.name[4:])
 
     def get_absolute_url(self):
         """

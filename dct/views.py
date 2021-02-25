@@ -1,3 +1,4 @@
+from django.db.models.functions import Substr
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic.list import ListView
@@ -19,6 +20,15 @@ class DataCollectTerminalCreateView(LoginRequiredMixin, ModifiedMethodFormValidM
 class DataCollectTerminalListView(LoginRequiredMixin, ListView):
     """Output a list of data collection terminals."""
     model = DataCollectTerminal
+
+    def get_context_data(self, **kwargs):
+        """
+        Temporarily. Rewrite!!!
+        Sorting objects by the truncated number of the name field.
+        """
+        context = super().get_context_data(**kwargs)
+        context['datacollectterminal_list'] = sorted(DataCollectTerminal.objects.all())
+        return context
 
 
 class DataCollectTerminalUpdate(LoginRequiredMixin, ModifiedMethodFormValidMixim, UpdateView):
