@@ -55,8 +55,6 @@
                             {% if request.user.is_authenticated %}
                                 <a href="{% url 'dashboard' %}" style="color: black;">{{ request.user }}</a>
                                 <a href="{% url 'logout' %}"><img class="logout" src="/static/logout.png" alt="Logout"></a>
-                            {% else %}
-                                <a href="{% url 'login' %}" style="color: black;">Log-in</a>
                             {% endif %}
                         </span>
 

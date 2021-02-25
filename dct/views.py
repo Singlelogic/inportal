@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -7,7 +8,7 @@ from .mixins import ModifiedMethodFormValidMixim
 from .models import DataCollectTerminal, Accumulator
 
 
-class DataCollectTerminalCreateView(ModifiedMethodFormValidMixim, CreateView):
+class DataCollectTerminalCreateView(LoginRequiredMixin, ModifiedMethodFormValidMixim, CreateView):
     """Create data collection terminal."""
     model = DataCollectTerminal
     template_name = 'dct/datacollectterminal_create.html'
@@ -15,12 +16,12 @@ class DataCollectTerminalCreateView(ModifiedMethodFormValidMixim, CreateView):
     success_url = reverse_lazy('list_dct_url')
 
 
-class DataCollectTerminalListView(ListView):
+class DataCollectTerminalListView(LoginRequiredMixin, ListView):
     """Output a list of data collection terminals."""
     model = DataCollectTerminal
 
 
-class DataCollectTerminalUpdate(ModifiedMethodFormValidMixim, UpdateView):
+class DataCollectTerminalUpdate(LoginRequiredMixin, ModifiedMethodFormValidMixim, UpdateView):
     """Update the selected data collection terminal."""
     model = DataCollectTerminal
     template_name = 'dct/datacollectterminal_update.html'
@@ -29,14 +30,14 @@ class DataCollectTerminalUpdate(ModifiedMethodFormValidMixim, UpdateView):
     success_url = reverse_lazy('list_dct_url')
 
 
-class DataCollectTerminalDeleteView(DeleteView):
+class DataCollectTerminalDeleteView(LoginRequiredMixin, DeleteView):
     """Delete data collection terminal."""
     model = DataCollectTerminal
     template_name = 'dct/datacollectterminal_delete.html'
     success_url = reverse_lazy('list_dct_url')
 
 
-class AccumulatorCreateView(CreateView):
+class AccumulatorCreateView(LoginRequiredMixin, CreateView):
     """Create accumulator."""
     model = Accumulator
     template_name = 'dct/accumulator_create.html'
@@ -44,12 +45,12 @@ class AccumulatorCreateView(CreateView):
     success_url = reverse_lazy('list_accumulator_url')
 
 
-class AccumulatorListView(ListView):
+class AccumulatorListView(LoginRequiredMixin, ListView):
     """Output a list of accumulators."""
     model = Accumulator
 
 
-class AccumulatorUpdateView(UpdateView):
+class AccumulatorUpdateView(LoginRequiredMixin, UpdateView):
     """Update the selected accumulator."""
     model = Accumulator
     template_name = 'dct/accumulator_update.html'
@@ -57,7 +58,7 @@ class AccumulatorUpdateView(UpdateView):
     success_url = reverse_lazy('list_accumulator_url')
 
 
-class AccumulatorDeleteView(DeleteView):
+class AccumulatorDeleteView(LoginRequiredMixin, DeleteView):
     """Delete accumulator."""
     model = Accumulator
     template_name = 'dct/accumulator_delete.html'
