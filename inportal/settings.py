@@ -27,9 +27,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv('SECRET_KEY')
 IP_ADDRESS = os.getenv('IP_ADDRESS')
+DEBUG_VALUE = os.getenv('DEBUG_VALUE')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = bool(DEBUG_VALUE)
 
 ALLOWED_HOSTS = [ IP_ADDRESS, "127.0.0.1" ]
 

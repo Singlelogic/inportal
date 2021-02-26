@@ -23,6 +23,6 @@ urlpatterns = [
          name='password_reset_complete'),
 
     path('profile/', dashboard, name='dashboard'),
-    path('register/', register, name='register'),
+    # path('register/', register, name='register'),
     path('edit/', edit, name='edit'),
 ]
