@@ -1,6 +1,6 @@
-from django.db.models.functions import Substr
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
+from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
@@ -73,3 +73,8 @@ class AccumulatorDeleteView(LoginRequiredMixin, DeleteView):
     model = Accumulator
     template_name = 'dct/accumulator_delete.html'
     success_url = reverse_lazy('list_accumulator_url')
+
+
+class EquipmentListView(LoginRequiredMixin, TemplateView):
+    """Equipment List"""
+    template_name = 'dct/equipment_list.html'

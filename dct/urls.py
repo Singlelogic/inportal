@@ -5,6 +5,7 @@ from .views import (
     AccumulatorDeleteView,
     DataCollectTerminalCreateView, DataCollectTerminalDeleteView, DataCollectTerminalListView,
     DataCollectTerminalUpdate,
+    EquipmentListView,
 )
 
 
@@ -18,4 +19,6 @@ urlpatterns = [
     path('list_accumulator', AccumulatorListView.as_view(), name='list_accumulator_url'),
     path('update_accumulator/<int:pk>/', AccumulatorUpdateView.as_view(), name='update_accumulator_url'),
     path('delete_accumulator/<int:pk>/', AccumulatorDeleteView.as_view(), name='delete_accumulator_url'),
+
+    path('list_equipment/', EquipmentListView.as_view(), name='list_equipment_url'),
 ]
