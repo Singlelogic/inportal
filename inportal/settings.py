@@ -89,7 +89,7 @@ WSGI_APPLICATION = 'inportal.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'inportal',
+        'NAME': 'insys',
         'USER': 'djangouser',
         'PASSWORD': os.getenv('SECRET_KEY_DB'),
         'HOST': 'localhost',

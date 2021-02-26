@@ -14,7 +14,7 @@ class DataCollectTerminal(models.Model):
         (5, 'Intermec CK3a1'),
         (6, 'Intermec CK3n1'),
     )
-    name = models.CharField(max_length=50, unique=True, db_index=True,
+    name = models.CharField(primary_key=True, max_length=50, db_index=True,
                             verbose_name='Наименование')
     model = models.IntegerField(choices=MODELS, default=1, verbose_name='Модель')
     serial_number = models.CharField(max_length=50, unique=True,
@@ -61,8 +61,8 @@ class DataCollectTerminalRemark(models.Model):
 
 class Accumulator(models.Model):
     """Accumulator for Date Collect Terminal"""
-    number = models.CharField(max_length=10, unique=True, db_index=True,
-                              verbose_name='Номер')
+    number = models.IntegerField(primary_key=True, db_index=True,
+                                 verbose_name='Номер')
     remark = models.TextField(null=True, blank=True, verbose_name='Примечание')
 
     def __str__(self):
