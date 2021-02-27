@@ -2,7 +2,7 @@ from django.db import models
 from django.urls import reverse
 
 from client.models import Client
-
+from .utils import is_ru
 
 class DataCollectTerminal(models.Model):
     """Data Collect Terminal"""
@@ -16,6 +16,7 @@ class DataCollectTerminal(models.Model):
     )
     name = models.CharField(primary_key=True, max_length=50, db_index=True,
                             verbose_name='Наименование')
+    slug = models.SlugField(max_length=50, blank=True, unique=True)
     model = models.IntegerField(choices=MODELS, default=1, verbose_name='Модель')
     serial_number = models.CharField(max_length=50, unique=True,
                                      verbose_name='Серийный номер')
@@ -34,11 +35,15 @@ class DataCollectTerminal(models.Model):
     def __gt__(self, other):
         return int(self.name[4:]) > int(other.name[4:])
 
+    def save(self, *args, **kwargs):
+        self.slug = is_ru(self.name)
+        return super().save(*args, **kwargs)
+
     def get_absolute_url(self):
         """
         Method for getting the absolute path of an instance.
         """
-        return reverse('update_dct_url', kwargs={'pk': self.pk})
+        return reverse('update_dct_url', kwargs={'slug': self.slug})
 
     class Meta:
         verbose_name_plural = 'ТСД'
@@ -66,7 +71,7 @@ class Accumulator(models.Model):
     remark = models.TextField(null=True, blank=True, verbose_name='Примечание')
 
     def __str__(self):
-        return self.number
+        return str(self.number)
 
     class Meta:
         verbose_name_plural = 'Аккумуляторы'

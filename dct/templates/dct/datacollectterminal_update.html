@@ -13,6 +13,6 @@
         </table>
         <a href="{% url 'list_dct_url' %}" class="btn btn-secondary">Назад</a>
         <input type="submit" value="Сохранить" class="btn btn-secondary">
-        <a href="{% url 'delete_dct_url' pk=object.pk %}" class="btn btn-danger">Удалить</a>
+        <a href="{% url 'delete_dct_url' slug=object.slug %}" class="btn btn-danger">Удалить</a>
     </form>
 {% endblock %}

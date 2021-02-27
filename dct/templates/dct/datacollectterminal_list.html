@@ -38,7 +38,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm">
-                    <h6><a href="{% url 'update_dct_url' pk=dct.pk %}">{{ dct.name }}</a></h6>
+                    <h6><a href="{% url 'update_dct_url' slug=dct.slug %}">{{ dct.name }}</a></h6>
                 </div>
                 <div class="col-sm">
                     <p>{{ dct.get_model_display }}</p>

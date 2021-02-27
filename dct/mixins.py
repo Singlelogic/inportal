@@ -27,7 +27,7 @@ class ModifiedMethodFormValidMixim(ModelFormMixin):
         accum_in_form = form.cleaned_data['accumulator']
         # If this terminal already exists
         if DataCollectTerminal.objects.filter(name=form.cleaned_data['name']):
-            accum_in_db = DataCollectTerminal.objects.get(id=self.object.id).accumulator
+            accum_in_db = DataCollectTerminal.objects.get(slug=self.object.slug).accumulator
             if accum_in_db != accum_in_form:
                 if accum_in_db and accum_in_form:
                     accum_in_db.changed_status(2)
@@ -51,7 +51,7 @@ class ModifiedMethodFormValidMixim(ModelFormMixin):
             obj_dct = DataCollectTerminal.objects.get(name=form.cleaned_data['name'])
             remark_in_db = obj_dct.remark
             # If there are remarks in the remarks database
-            if DataCollectTerminalRemark.objects.filter(data_collect_terminal=obj_dct.id):
+            if DataCollectTerminalRemark.objects.filter(data_collect_terminal=obj_dct.slug):
                 if remark_in_form != remark_in_db:
                     DataCollectTerminalRemark.objects.create(data_collect_terminal=obj_dct,
                                                              remark=remark_in_form,

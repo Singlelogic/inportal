@@ -4,7 +4,7 @@ from django.urls import reverse
 
 class Client(models.Model):
     """Hardware users"""
-    client = models.CharField(primary_key=True, max_length=50, db_index=True,
+    client = models.CharField(max_length=50, unique=True,db_index=True,
                               verbose_name='Пользователь')
 
     def __str__(self):
