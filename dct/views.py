@@ -46,6 +46,16 @@ class DataCollectTerminalDeleteView(LoginRequiredMixin, DeleteView):
     template_name = 'dct/datacollectterminal_delete.html'
     success_url = reverse_lazy('list_dct_url')
 
+    def delete(self, request, *args, **kwargs):
+        """
+        Changing the status of the battery to extracted when
+        deleting the terminal.
+        """
+        object = self.get_object()
+        if object.accumulator:
+            object.accumulator.changed_status(2)
+        return super().delete(request, *args, **kwargs)
+
 
 class AccumulatorCreateView(LoginRequiredMixin, CreateView):
     """Create accumulator."""
