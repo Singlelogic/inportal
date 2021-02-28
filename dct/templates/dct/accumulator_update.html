@@ -11,6 +11,7 @@
         <table>
             {{ form.as_table }}
         </table>
+        <p><h6><b>Колличество отработанных дней: {{ lifetime }}</b></h6></p>
         <a href="{% url 'list_accumulator_url' %}" class="btn btn-secondary">Назад</a>
         <input type="submit" value="Сохранить" class="btn btn-secondary">
         <a href="{% url 'delete_accumulator_url' pk=object.pk %}" class="btn btn-danger">Удалить</a>
