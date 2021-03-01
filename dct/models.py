@@ -116,3 +116,6 @@ class AccumulatorDate(models.Model):
 
     def __str__(self):
         return f'{self.accumulator}: {self.state} - {self.date.strftime("%Y.%m.%d %I:%M")}'
+
+    class Meta:
+        ordering = ['date']
