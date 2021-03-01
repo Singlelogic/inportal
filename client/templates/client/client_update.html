@@ -11,8 +11,8 @@
         <table>
             {{ form.as_table }}
         </table>
-        <a href="{% url 'list_client_url' %}" class="btn btn-secondary">Назад</a>
-        <input type="submit" value="Сохранить" class="btn btn-secondary">
-        <a href="{% url 'delete_client_url' pk=object.pk %}" class="btn btn-danger">Удалить</a>
+        <a href="{% url 'list_client_url' %}" class="btn btn-secondary bottom-10px">Назад</a>
+        <input type="submit" value="Сохранить" class="btn btn-secondary bottom-10px">
+        <a href="{% url 'delete_client_url' pk=object.pk %}" class="btn btn-danger bottom-10px">Удалить</a>
     </form>
 {% endblock %}
