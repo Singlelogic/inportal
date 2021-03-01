@@ -81,6 +81,7 @@ class Accumulator(models.Model):
     class Meta:
         verbose_name_plural = 'Аккумуляторы'
         verbose_name = 'Аккумулятор'
+        ordering = ['number']
 
     def get_absolute_url(self):
         """
