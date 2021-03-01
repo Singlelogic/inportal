@@ -63,6 +63,11 @@ class DataCollectTerminalRemark(models.Model):
         return f'{self.data_collect_terminal}: {self.remark} - ' \
                f'{self.date.strftime("%Y.%m.%d %I:%M")}'
 
+    class Meta:
+        verbose_name = 'Примечание'
+        verbose_name_plural = 'Примечания'
+        ordering = ['-date']
+
 
 class Accumulator(models.Model):
     """Accumulator for Date Collect Terminal"""

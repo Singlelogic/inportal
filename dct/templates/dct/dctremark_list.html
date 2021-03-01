@@ -1,0 +1,14 @@
+{% extends "basic.html" %}
+
+{% block title %}
+    История примечаний
+{% endblock %}
+
+{% block content %}
+    <p><h5>История примечаний:</h5></p>
+    {% for dctremark in dctremarks %}
+        <ul>
+            <li>{{ dctremark.date|date:"d.m.Y G:i" }}: <b>{{ dctremark.remark }}</b></li>
+        </ul>
+    {% endfor %}
+{% endblock %}

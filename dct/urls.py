@@ -5,7 +5,7 @@ from .views import (
     AccumulatorDeleteView,
     DataCollectTerminalCreateView, DataCollectTerminalDeleteView, DataCollectTerminalListView,
     DataCollectTerminalUpdate,
-    EquipmentListView,
+    EquipmentListView, DCTRemarkListView
 )
 
 
@@ -21,4 +21,5 @@ urlpatterns = [
     path('delete_accumulator/<int:pk>/', AccumulatorDeleteView.as_view(), name='delete_accumulator_url'),
 
     path('list_equipment/', EquipmentListView.as_view(), name='list_equipment_url'),
+    path('list_dctremark/<str:slug>/', DCTRemarkListView.as_view(), name='list_dctremark_url')
 ]

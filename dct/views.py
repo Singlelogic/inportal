@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
@@ -95,3 +96,15 @@ class AccumulatorDeleteView(LoginRequiredMixin, DeleteView):
 class EquipmentListView(LoginRequiredMixin, TemplateView):
     """Equipment List"""
     template_name = 'dct/equipment_list.html'
+
+
+class DCTRemarkListView(LoginRequiredMixin, TemplateView):
+    """List of terminal notes."""
+    template_name = 'dct/dctremark_list.html'
+
+    def get_context_data(self, **kwargs):
+        """Adding a list of notes for a specific terminal to the context."""
+        context = super().get_context_data(**kwargs)
+        dct = get_object_or_404(DataCollectTerminal, slug=context['slug'])
+        context['dctremarks'] = dct.datacollectterminalremark_set.all()
+        return context

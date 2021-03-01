@@ -42,26 +42,24 @@ class ModifiedMethodFormValidMixim(ModelFormMixin):
                 accum_in_form.changed_status(1)
 
     def data_collect_terminal_remark(self, form):
-        """
-        Remark for data collect terminal.
-        """
+        """Remark for data collect terminal."""
         remark_in_form = form.cleaned_data['remark']
         # If this terminal already exists
         if DataCollectTerminal.objects.filter(name=form.cleaned_data['name']):
-            obj_dct = DataCollectTerminal.objects.get(name=form.cleaned_data['name'])
-            remark_in_db = obj_dct.remark
+            dct = DataCollectTerminal.objects.get(name=form.cleaned_data['name'])
+            remark_in_db = dct.remark
             # If there are remarks in the remarks database
-            if DataCollectTerminalRemark.objects.filter(data_collect_terminal=obj_dct.slug):
+            if DataCollectTerminalRemark.objects.filter(data_collect_terminal=dct.name):
                 if remark_in_form != remark_in_db:
-                    DataCollectTerminalRemark.objects.create(data_collect_terminal=obj_dct,
+                    DataCollectTerminalRemark.objects.create(data_collect_terminal=dct,
                                                              remark=remark_in_form,
                                                              date=timezone.now())
             else:
                 if remark_in_db != remark_in_form:
                     if remark_in_db:
-                        DataCollectTerminalRemark.objects.create(data_collect_terminal=obj_dct,
+                        DataCollectTerminalRemark.objects.create(data_collect_terminal=dct,
                                                                  remark=remark_in_db,
-                                                                 date=obj_dct.date)
-                    DataCollectTerminalRemark.objects.create(data_collect_terminal=obj_dct,
+                                                                 date=dct.date)
+                    DataCollectTerminalRemark.objects.create(data_collect_terminal=dct,
                                                              remark=remark_in_form,
                                                              date=timezone.now())
