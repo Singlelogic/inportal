@@ -15,3 +15,8 @@ class Client(models.Model):
         Method for getting the absolute path of an instance.
         """
         return reverse('update_client_url', kwargs={'pk': self.pk})
+
+    class Meta:
+        verbose_name = 'Пользователь'
+        verbose_name_plural = 'Пользователи'
+        ordering = ['client']
