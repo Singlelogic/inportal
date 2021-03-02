@@ -38,10 +38,17 @@
                                         </div>
                                     </div>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'list_client_url' %}" style="color: black;">Пользователи</a>
+                                </li>
 
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'list_client_url' %}" style="color: black;">Пользователи</a>
-                            </li>
+<!--############################################################## FOR BLOG ##############################################################-->
+                                {% if request.user.is_authenticated and request.user.is_staff %}
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{% url 'posts_list_url' %}" style="color: black;">Заметки</a>
+                                    </li>
+                                {% endif %}
+<!--############################################################ END FOR BLOG ############################################################-->
 
                             </ul>
                             <form class="d-flex">
@@ -69,6 +76,30 @@
                     {% endblock %}
                 </div>
             </div>
+
+<!--############################################################## FOR BLOG ##############################################################-->
+            <div class="row">
+                <div class="col-9 offset-md-0">
+                    <div class="container mt-2">
+                        <div class="row">
+                            <div class="col-8 offset-md-0">
+                                {% block comments %}
+                                {% endblock %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% if request.user.is_authenticated and request.user.is_staff %}
+                <div class="admin-panel align-items-center">
+                    <a href="/admin" class="btn btn-outline-info">Admin</a>
+                    {% block admin-panel %}
+                    {% endblock %}
+                </div>
+            {% endif %}
+<!--############################################################ END FOR BLOG ############################################################-->
+
         </main>
 
         <footer id="footer" class="footer-1">

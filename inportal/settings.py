@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     'home.apps.HomeConfig',
     'dct.apps.DctConfig',
     'client.apps.ClientConfig',
+    'blog.apps.BlogConfig',
+    'django_summernote',
 ]
 
 MIDDLEWARE = [
@@ -144,3 +146,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+"""############################################ FOR BLOG ############################################"""
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+SUMMERNOTE_THEME = 'bs4'
+"""########################################## END FOR BLOG ##########################################"""

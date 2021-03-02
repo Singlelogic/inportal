@@ -1,0 +1,12 @@
+{% extends 'blog/base_blog.html' %}
+
+{% block title %}
+    Posts list - {{ block.super }}
+{% endblock %}
+
+{% block content %}
+<!--    <h3 class="mb-3">Посты: {{ title }}</h3>-->
+    {% for post in page_object.object_list %}
+        {% include 'blog/includes/post_card_template.html' %}
+    {% endfor %}
+{% endblock %}

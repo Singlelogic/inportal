@@ -1,0 +1,15 @@
+a.edit, a.delete { /* a tag; edit/deleted class */
+    display: none;
+}
+
+.inline {
+    display: inline-block;
+}
+
+.layer{
+    margin-left: 1%;
+}
+
+div.card-body-change{
+    margin: 5px 15px;
+}

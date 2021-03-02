@@ -19,3 +19,44 @@
 .bottom-10px{
     margin-bottom: 10px;
 }
+
+/*###################################### FOR BLOG ######################################*/
+.admin-panel { /* class admin-panel */
+    border: 1px solid #999;
+    border-radius: 6px;
+    position: fixed;
+    right: 40px;
+    bottom: 30px;
+    opacity: 0.5;
+    padding: 10px;
+}
+
+.admin-panel:hover {
+    opacity: 1;
+}
+
+.admin-panel a { /* class admin-panel; a nested tag */
+    display: block;
+    margin: 5px 0;
+}
+
+div.comment{
+    margin: 10px 0;
+}
+
+a.edit, a.delete { /* a tag; edit/deleted class */
+    display: none;
+}
+
+.inline {
+    display: inline-block;
+}
+
+.layer{
+    margin-left: 1%;
+}
+
+div.card-body-change{
+    margin: 5px 15px;
+}
+/*#################################### END FOR BLOG ####################################*/

@@ -1,0 +1,61 @@
+{% extends 'blog/base_blog.html' %}
+
+{% block title %}
+    {{ post.title }} - {{ block.super }}
+{% endblock %}
+
+{% block content %}
+    <h4 class="mt-2">
+        {{ post.title }}
+    </h4>
+
+    {% if post.image_preview %}
+        <img class="post" src="{{ post.image_preview.url }}">
+    {% endif %}
+
+    <p>
+        {{ post.body|safe }}
+    </p>
+
+{% endblock %}
+
+{% block comments %}
+    {% with comments.count as total_comments %}
+    <h5>
+        {{ total_comments }} comment{{ total_comments|pluralize }}
+    </h5>
+    {% endwith %}
+
+    {% for comment in comments %}
+    <div class="comment">
+        <div class="card">
+            <div class="card-header">
+                Комментарий {{ forloop.counter }} от {{ comment.name }}
+                {{ comment.created }}
+            </div>
+            <div class="card-body-change">
+                <blockquote>
+                    <h6><p>{{ comment.body|linebreaks }}</p></h6>
+                </blockquote>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+        <p>Пока нет комминтариев.</p>
+    {% endfor %}
+
+    {% if request.user.is_authenticated %}
+        {% if new_comment %}
+            <h5>Ваш комментарий был добавлен</h5>
+        {% else %}
+            <h5>Добавить новый комментарий</h5>
+            <form action="." method="post">
+                {{ comment_form.as_p }}
+                {% csrf_token %}
+                <p><input type="submit" value="Отправить комментарий"></p>
+            </form>
+        {% endif %}
+    {% else %}
+        <p>Для отправки комментария необходимо <a href="{% url 'login' %}">авторизоваться</a>.</p>
+    {% endif %}
+{% endblock %}

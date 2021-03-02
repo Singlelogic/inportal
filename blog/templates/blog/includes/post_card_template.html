@@ -1,0 +1,29 @@
+{% load static %}
+<div class="card mb-3 comment">
+    <div class="row no-gutters">
+        <div class="col-md-3">
+
+            {% if post.image_preview %}
+                <img class="center-pic card-img preview" src="{{ post.image_preview.url }}">
+            {% endif %}
+
+        </div>
+        <div class="col-md-9">
+            <div class="card-body">
+<!--                <h5 class="card-title">{{ post.title }}</h5>-->
+                <h5><a href="{{ post.get_absolute_url }}" class="card-title" style="color: black;">{{ post.title }}</a></h5>
+                <p class="card-text">{{ post.body|safe|truncatechars_html:100 }}</p>
+                <p class="card-text inline"><small class="text-muted">{{ post.date_pub }}</small></p>
+                <a href="{{ post.get_absolute_url }}" class="btn btn-light inline" style="float: right;">Читать</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-footer text-muted">
+        Tags:
+        {% for tag in post.tags.all %}
+        <a href="{{ tag.get_absolute_url }}">{{ tag.title }} </a>
+        {% endfor %}
+    </div>
+
+</div>
