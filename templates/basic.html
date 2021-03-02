@@ -100,8 +100,14 @@
                         <div class="col-xs-12 col-sm-6 col-md-3">
                             <div class="widget no-box">
                                 <h5 class="widget-title">Авторизация<span></span></h5>
-                                <p>Авторизуйтесь, чтобы получить доступ к информационным ресурсам</p>
-                                <a class="btn btn-footer" href="{% url 'login' %}">Авторизоваться</a>
+                                {% if request.user.is_authenticated %}
+                                    Вы успешно вошли в систему как
+                                    <p><a href="{% url 'dashboard' %}" style="color: white;">{{ request.user }}</a></p>
+                                    <a class="btn btn-footer" href="{% url 'logout' %}">Выйти из системы</a>
+                                {% else %}
+                                    <p>Авторизуйтесь, чтобы получить доступ к информационным ресурсам</p>
+                                    <a class="btn btn-footer" href="{% url 'login' %}">Авторизоваться</a>
+                                {% endif %}
                             </div>
                         </div>
 
