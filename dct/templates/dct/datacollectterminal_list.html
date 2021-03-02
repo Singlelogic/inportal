@@ -47,13 +47,17 @@
                     <p>{{ dct.serial_number }}</p>
                 </div>
                 <div class="col-sm">
-                    <p>{{ dct.user }}</p>
+                    {% if dct.user %}
+                        <p>{{ dct.user }}</p>
+                    {% endif %}
                 </div>
                 <div class="col-sm">
                     <p>{{ dct.mac_address }}</p>
                 </div>
                 <div class="col-sm">
-                    <p>{{ dct.accumulator }}</p>
+                    {% if dct.accumulator %}
+                        <p>{{ dct.accumulator }}</p>
+                    {% endif %}
                 </div>
                 <div class="col-sm">
                     <p>{{ dct.remark }}</p>
