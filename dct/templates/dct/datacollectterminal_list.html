@@ -5,65 +5,38 @@
 {% endblock %}
 
 {% block content %}
-
-    <h6><a href="{% url 'create_dct_url' %}">Добавить ТСД</a></h6>
-
-    <div class="container">
-        <div class="row">
-            <div class="col-sm">
-                <h5>Номер</h5>
-            </div>
-            <div class="col-sm">
-                <h5>Модель</h5>
-            </div>
-            <div class="col-sm">
-                <h5>Серийный номер</h5>
-            </div>
-            <div class="col-sm">
-                <h5>Пользователь</h5>
-            </div>
-            <div class="col-sm">
-                <h5>MAC-адрес</h5>
-            </div>
-            <div class="col-sm">
-                <h5>S/N аккумулятора</h5>
-            </div>
-            <div class="col-sm">
-                <h5>Примечание</h5>
-            </div>
-        </div>
-    </div>
-
-    {% for dct in datacollectterminal_list %}
-        <div class="container">
-            <div class="row">
-                <div class="col-sm">
-                    <h6><a href="{% url 'update_dct_url' slug=dct.slug %}">{{ dct.name }}</a></h6>
-                </div>
-                <div class="col-sm">
-                    <p>{{ dct.get_model_display }}</p>
-                </div>
-                <div class="col-sm">
-                    <p>{{ dct.serial_number }}</p>
-                </div>
-                <div class="col-sm">
+    <table class="table">
+        <thead class="thead-light">
+        <tr>
+            <th>Номер</th>
+            <th>Модель</th>
+            <th>Серийный номер</th>
+            <th>Пользователь</th>
+            <th>MAC-адрес</th>
+            <th>S/N аккумулятора</th>
+            <th>Примечание</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for dct in datacollectterminal_list %}
+            <tr>
+                <td><h6><a href="{% url 'update_dct_url' slug=dct.slug %}">{{ dct.name }}</a></h6></td>
+                <td>{{ dct.get_model_display }}</td>
+                <td>{{ dct.serial_number }}</td>
+                <td>
                     {% if dct.user %}
                         <p>{{ dct.user }}</p>
                     {% endif %}
-                </div>
-                <div class="col-sm">
-                    <p>{{ dct.mac_address }}</p>
-                </div>
-                <div class="col-sm">
+                </td>
+                <td>{{ dct.mac_address }}</td>
+                <td>
                     {% if dct.accumulator %}
                         <p>{{ dct.accumulator }}</p>
                     {% endif %}
-                </div>
-                <div class="col-sm">
-                    <p>{{ dct.remark }}</p>
-                </div>
-            </div>
-        </div>
-    {% endfor %}
-
+                </td>
+                <td><p>{{ dct.remark }}</p></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}
