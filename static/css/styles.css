@@ -59,4 +59,10 @@ a.edit, a.delete { /* a tag; edit/deleted class */
 div.card-body-change{
     margin: 5px 15px;
 }
+
+img.post{
+    max-width: 40%;
+    height: auto;
+    display: block;
+}
 /*#################################### END FOR BLOG ####################################*/
