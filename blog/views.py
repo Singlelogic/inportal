@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import View
+from django.views.generic.list import ListView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
@@ -66,20 +67,19 @@ class PostDelete(LoginRequiredMixin, ObjectDeleteMixin, View):
     raise_exception = True
 
 
-@login_required()
-def posts_list(request):
-    search_query = request.GET.get('search', '')
-    if search_query:
-        posts = Post.objects.filter(Q(title__icontains=search_query) |
-                                    Q(body__icontains=search_query))
-    else:
-        posts = Post.objects.all()
+class PostListView(LoginRequiredMixin, ListView):
+    """List of posts."""
+    paginate_by = 3
 
-    page, is_paginated = paginator(request, posts)
-    return render(request, 'blog/post_list.html', context={
-        'page_object': page,
-        'is_paginated': is_paginated
-    })
+    def get_queryset(self):
+        """Getting posts by title and body, if a search was requested."""
+        search_query = self.request.GET.get('search', '')
+        if search_query:
+            posts = Post.objects.filter(Q(title__icontains=search_query) |
+                                        Q(body__icontains=search_query))
+        else:
+            posts = Post.objects.all()
+        return posts
 
 
 class TagDetail(LoginRequiredMixin, View):

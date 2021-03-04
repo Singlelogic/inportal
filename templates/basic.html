@@ -51,8 +51,8 @@
 <!--############################################################ END FOR BLOG ############################################################-->
 
                             </ul>
-                            <form class="d-flex">
-                                <input class="form-control me-2" type="search" placeholder="Поиск" aria-label="Search">
+                            <form class="d-flex" action="{% url 'posts_list_url' %}">
+                                <input class="form-control me-2" type="search" placeholder="Поиск" aria-label="Search" name="search">
                                 <button class="btn btn-outline-success" type="submit">Поиск</button>
                             </form>
                         {% endif %}
