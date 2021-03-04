@@ -1,17 +1,34 @@
 {% extends 'basic.html' %}
 
-{% block admin-panel %}
-    <div class="btn-group">
-        <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false">Create</button>
-        <div class="dropdown-menu">
-            <a class="dropdown-item" href="{% url 'post_create_url' %}">Post</a>
-            <a class="dropdown-item" href="{% url 'tag_create_url' %}">Tag</a>
-        </div>
-    </div>
+{% block content %}
 
-    <a href="{{ admin_object.get_update_url }}" class="btn btn-light edit"
-       style="{% if detail %}display: block;{% endif %}">Edit</a>
-    <a href="{{ admin_object.get_delete_url }}" class="btn btn-danger delete"
-       style="{% if detail %}display: block;{% endif %}">Delete</a>
+    {% block content_blog %}
+    {% endblock %}
+
+    {% block comments %}
+    {% endblock %}
+
+    {% block admin %}
+        {% if request.user.is_authenticated and request.user.is_staff %}
+            <div class="admin-panel align-items-center">
+                <a href="/admin" class="btn btn-outline-info">Admin</a>
+                {% block admin-panel %}
+                <div class="btn-group">
+                    <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">Create</button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{% url 'post_create_url' %}">Post</a>
+                        <a class="dropdown-item" href="{% url 'tag_create_url' %}">Tag</a>
+                    </div>
+                </div>
+
+                <a href="{{ admin_object.get_update_url }}" class="btn btn-light edit"
+                    style="{% if detail %}display: block;{% endif %}">Edit</a>
+                <a href="{{ admin_object.get_delete_url }}" class="btn btn-danger delete"
+                    style="{% if detail %}display: block;{% endif %}">Delete</a>
+                {% endblock %}
+            </div>
+        {% endif %}
+    {% endblock %}
+
 {% endblock %}

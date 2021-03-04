@@ -54,13 +54,13 @@ class PostCreate(LoginRequiredMixin, OblectCreateMixin, View):
 class PostUpdate(LoginRequiredMixin, ObjectUpdateMixin, View):
     model = Post
     model_form = PostForm
-    template = 'blog/post_update_form.html'
+    template = 'blog/post_update.html'
     raise_exception = True
 
 
 class PostDelete(LoginRequiredMixin, ObjectDeleteMixin, View):
     model = Post
-    template = 'blog/post_delete_form.html'
+    template = 'blog/post_delete.html'
     redirect_url = 'posts_list_url'
     raise_exception = True
 
@@ -74,7 +74,7 @@ def posts_list(request):
         posts = Post.objects.all()
 
     page, is_paginated = paginator(request, posts)
-    return render(request, 'blog/index.html', context={
+    return render(request, 'blog/post_list.html', context={
         'page_object': page,
         'is_paginated': is_paginated
     })
@@ -85,7 +85,7 @@ class TagDetail(View):
         obj = get_object_or_404(Tag, slug__iexact=slug)
         posts = obj.posts.all()
         page, is_paginated = paginator(request, posts)
-        return render(request, 'blog/index.html', context={
+        return render(request, 'blog/post_list.html', context={
             'detail': True,
             'admin_object': obj,
             'page_object': page,
@@ -103,17 +103,17 @@ class TagCreate(LoginRequiredMixin, OblectCreateMixin, View):
 class TagUpdate(LoginRequiredMixin, ObjectUpdateMixin, View):
     model = Tag
     model_form = TagForm
-    template = 'blog/tag_update_form.html'
+    template = 'blog/tag_update.html'
     raise_exception = True
 
 
 class TagDelete(LoginRequiredMixin, ObjectDeleteMixin, View):
     model = Tag
-    template = 'blog/tag_delete_form.html'
+    template = 'blog/tag_delete.html'
     redirect_url = 'tags_list_url'
     raise_exception = True
 
 
 def tags_list(request):
     tags = Tag.objects.all()
-    return render(request, 'blog/tags_list.html', context={'tags': tags})
+    return render(request, 'blog/tag_list.html', context={'tags': tags})
