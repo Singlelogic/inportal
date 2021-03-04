@@ -13,3 +13,7 @@ a.edit, a.delete { /* a tag; edit/deleted class */
 div.card-body-change{
     margin: 5px 15px;
 }
+
+.bottom-10px{
+    margin-bottom: 10px;
+}
