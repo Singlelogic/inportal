@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import View
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 
@@ -11,7 +12,7 @@ from .mixins import (
 from .utils import paginator
 
 
-class PostDetail(View):
+class PostDetail(LoginRequiredMixin, View):
 
     def get(self, request, slug):
         obj = get_object_or_404(Post, slug__iexact=slug)
@@ -65,6 +66,7 @@ class PostDelete(LoginRequiredMixin, ObjectDeleteMixin, View):
     raise_exception = True
 
 
+@login_required()
 def posts_list(request):
     search_query = request.GET.get('search', '')
     if search_query:
@@ -80,7 +82,7 @@ def posts_list(request):
     })
 
 
-class TagDetail(View):
+class TagDetail(LoginRequiredMixin, View):
     def get(self, request, slug):
         obj = get_object_or_404(Tag, slug__iexact=slug)
         posts = obj.posts.all()
@@ -114,6 +116,7 @@ class TagDelete(LoginRequiredMixin, ObjectDeleteMixin, View):
     raise_exception = True
 
 
+@login_required()
 def tags_list(request):
     tags = Tag.objects.all()
     return render(request, 'blog/tag_list.html', context={'tags': tags})
