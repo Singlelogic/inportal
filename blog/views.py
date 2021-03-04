@@ -4,7 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 
 from .forms import CommentForm, TagForm, PostForm
-from .models import Comment, Post, Tag
+from .models import Post, Tag
 from .mixins import (
     OblectCreateMixin, ObjectUpdateMixin, ObjectDeleteMixin
 )
@@ -15,7 +15,7 @@ class PostDetail(View):
 
     def get(self, request, slug):
         obj = get_object_or_404(Post, slug__iexact=slug)
-        comments = obj.comments.filter(active=True)
+        comments = obj.comments.all()
         comment_form = CommentForm()
         return render(request, 'blog/post_detail.html', context={
             'post': obj,
@@ -27,14 +27,14 @@ class PostDetail(View):
 
     def post(self, request, slug):
         obj = get_object_or_404(Post, slug__iexact=slug)
-        comments = obj.comments.filter(active=True)
+        comments = obj.comments.all()
         comment_form = CommentForm(data=request.POST)
         if comment_form.is_valid():
             # Create Comment object but don't save to database yet
             new_comment = comment_form.save(commit=False)
             # Assign the current post to the comment
             new_comment.post = obj
-            # Save the comment to the database
+            new_comment.user = request.user
             new_comment.save()
             comment_form = CommentForm()
 

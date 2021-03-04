@@ -1,5 +1,6 @@
 from time import time
 
+from django.conf import settings
 from django.db import models
 from django.shortcuts import reverse
 from django.utils.text import slugify
@@ -62,12 +63,9 @@ class Tag(models.Model):
 class Comment(models.Model):
     post = models.ForeignKey(Post, related_name='comments',
                              on_delete=models.CASCADE)
-    name = models.CharField(u'Имя', max_length=80)
-    email = models.EmailField(u'E-mail')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=None)
     body = models.TextField(u'Комментарий')
     created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
-    active = models.BooleanField(default=True)
 
     class Meta:
         ordering = ('created',)
