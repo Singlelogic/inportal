@@ -10,7 +10,6 @@ from .models import Post, Tag
 from .mixins import (
     OblectCreateMixin, ObjectUpdateMixin, ObjectDeleteMixin
 )
-from .utils import paginator
 
 
 class PostDetail(LoginRequiredMixin, View):
