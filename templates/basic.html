@@ -45,13 +45,13 @@
 <!--############################################################## FOR BLOG ##############################################################-->
                                 {% if request.user.is_authenticated and request.user.is_staff %}
                                     <li class="nav-item">
-                                        <a class="nav-link" href="{% url 'posts_list_url' %}" style="color: black;">Заметки</a>
+                                        <a class="nav-link" href="{% url 'post_list_url' %}" style="color: black;">Заметки</a>
                                     </li>
                                 {% endif %}
 <!--############################################################ END FOR BLOG ############################################################-->
 
                             </ul>
-                            <form class="d-flex" action="{% url 'posts_list_url' %}">
+                            <form class="d-flex" action="{% url 'post_list_url' %}">
                                 <input class="form-control me-2" type="search" placeholder="Поиск" aria-label="Search" name="search">
                                 <button class="btn btn-outline-success" type="submit">Поиск</button>
                             </form>

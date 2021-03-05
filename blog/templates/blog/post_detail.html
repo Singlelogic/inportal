@@ -47,7 +47,7 @@
                                     <h5>Ваш комментарий был добавлен</h5>
                                 {% else %}
                                     <h5>Добавить новый комментарий</h5>
-                                    <form action="." method="post">
+                                    <form method="post">
                                         {{ comment_form.as_p }}
                                         {% csrf_token %}
                                         <p><input type="submit" value="Отправить комментарий"></p>

@@ -1,5 +1,7 @@
 from django.shortcuts import render, get_object_or_404
+from django.urls import reverse_lazy
 from django.views.generic import View
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -12,8 +14,45 @@ from .mixins import (
 )
 
 
-class PostDetail(LoginRequiredMixin, View):
+class PostCreateView(LoginRequiredMixin, CreateView):
+    """Create a post."""
+    model = Post
+    form_class = PostForm
+    template_name = 'blog/post_create.html'
 
+
+class PostListView(LoginRequiredMixin, ListView):
+    """List of posts."""
+    paginate_by = 3
+
+    def get_queryset(self):
+        """Getting posts by title and body, if a search was requested."""
+        search_query = self.request.GET.get('search', '')
+        if search_query:
+            posts = Post.objects.filter(Q(title__icontains=search_query) |
+                                        Q(body__icontains=search_query))
+        else:
+            posts = Post.objects.all()
+        return posts
+
+
+# class PostDetailView(LoginRequiredMixin, TemplateView):
+#     """Dispaling a specific post."""
+#     # model = Post
+#     template_name = 'blog/post_detail.html'
+#
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         post = get_object_or_404(Post, slug=context['slug'])
+#         context['post'] = post
+#         comments = post.comments.all()
+#         context['comments'] = comments
+#         context['comment_form'] = CommentForm()
+#         return context
+
+
+class PostDetailView(LoginRequiredMixin, View):
+    """Dispaling a specific post."""
     def get(self, request, slug):
         obj = get_object_or_404(Post, slug__iexact=slug)
         comments = obj.comments.all()
@@ -31,14 +70,11 @@ class PostDetail(LoginRequiredMixin, View):
         comments = obj.comments.all()
         comment_form = CommentForm(data=request.POST)
         if comment_form.is_valid():
-            # Create Comment object but don't save to database yet
             new_comment = comment_form.save(commit=False)
-            # Assign the current post to the comment
             new_comment.post = obj
             new_comment.user = request.user
             new_comment.save()
             comment_form = CommentForm()
-
         return render(request, 'blog/post_detail.html', context={
             'post': obj,
             'comments': comments,
@@ -46,39 +82,18 @@ class PostDetail(LoginRequiredMixin, View):
         })
 
 
-class PostCreate(LoginRequiredMixin, OblectCreateMixin, View):
-    model_form = PostForm
-    template = 'blog/post_create.html'
-    raise_exception = True
-
-
-class PostUpdate(LoginRequiredMixin, ObjectUpdateMixin, View):
+class PostUpdateView(LoginRequiredMixin, UpdateView):
+    """Update a post."""
     model = Post
-    model_form = PostForm
-    template = 'blog/post_update.html'
-    raise_exception = True
+    form_class = PostForm
+    template_name = 'blog/post_update.html'
 
 
-class PostDelete(LoginRequiredMixin, ObjectDeleteMixin, View):
+class PostDeleteView(LoginRequiredMixin, DeleteView):
+    """Delete a post."""
     model = Post
-    template = 'blog/post_delete.html'
-    redirect_url = 'posts_list_url'
-    raise_exception = True
-
-
-class PostListView(LoginRequiredMixin, ListView):
-    """List of posts."""
-    paginate_by = 3
-
-    def get_queryset(self):
-        """Getting posts by title and body, if a search was requested."""
-        search_query = self.request.GET.get('search', '')
-        if search_query:
-            posts = Post.objects.filter(Q(title__icontains=search_query) |
-                                        Q(body__icontains=search_query))
-        else:
-            posts = Post.objects.all()
-        return posts
+    template_name = 'blog/post_delete.html'
+    success_url = reverse_lazy('posts_list_url')
 
 
 class TagDetail(LoginRequiredMixin, View):
