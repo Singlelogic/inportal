@@ -89,6 +89,30 @@ class PostUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'blog/post_update.html'
 
 
+# class PostDeleteView(LoginRequiredMixin, View):
+#     """Deleting a post directly from the database."""
+#     def get(self, request, pk):
+#         return render(request, 'blog/post_delete.html', context={
+#             'pk': pk,
+#         })
+#
+#     def post(self, request, pk):
+#         with connection.cursor() as cursor:
+#             cursor.execute(
+#                 dedent('''\
+#                     delete from blog_post_tags
+#                     where post_id=%s;'''),
+#                 [ pk ]
+#             )
+#             cursor.execute(
+#                 dedent('''\
+#                     delete from blog_post
+#                     where id=%s;'''),
+#                 [ pk ]
+#             )
+#         return HttpResponseRedirect(reverse('post_list_url'))
+
+
 class PostDeleteView(LoginRequiredMixin, DeleteView):
     """Delete a post."""
     model = Post
