@@ -117,7 +117,7 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
     """Delete a post."""
     model = Post
     template_name = 'blog/post_delete.html'
-    success_url = reverse_lazy('posts_list_url')
+    success_url = reverse_lazy('post_list_url')
 
 
 class TagDetail(LoginRequiredMixin, View):
