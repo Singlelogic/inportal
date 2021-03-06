@@ -5,14 +5,15 @@ from django.db import models
 from django.shortcuts import reverse
 from django.utils.text import slugify
 
+from .utils import is_ru
 
-def gen_slug(s):
-    new_slug = slugify(s, allow_unicode=True)
-    return new_slug + '-' + str(int(time()))
+# def gen_slug(s):
+#     new_slug = slugify(s, allow_unicode=True)
+#     return new_slug + '-' + str(int(time()))
 
 
 class Post(models.Model):
-    title = models.CharField(max_length=150, db_index=True)
+    title = models.CharField(max_length=150, db_index=True, unique=True)
     slug = models.SlugField(max_length=150, blank=True, unique=True)
     body = models.TextField(blank=True)
     tags = models.ManyToManyField('Tag', blank=True, related_name='posts')
@@ -29,8 +30,12 @@ class Post(models.Model):
         return reverse('post_delete_url', kwargs={'slug': self.slug})
 
     def save(self, *args, **kwargs):
-        if not self.id:
-            self.slug = gen_slug(self.title)
+        title_split = self.title.split()
+        if len(title_split) > 3:
+            title = ' '.join(title_split[:3])
+            self.slug = is_ru(title)
+        else:
+            self.slug = is_ru(self.title)
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -41,8 +46,13 @@ class Post(models.Model):
 
 
 class Tag(models.Model):
-    title = models.CharField(max_length=50)
+    title = models.CharField(max_length=50, unique=True)
     slug = models.SlugField(max_length=50, unique=True)
+
+    def save(self, *args, **kwargs):
+        self.slug = self.title
+        super().save(*args, **kwargs)
+
 
     def get_absolute_url(self):
         return reverse('tag_detail_url', kwargs={'slug': self.slug})

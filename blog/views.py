@@ -3,15 +3,11 @@ from django.urls import reverse_lazy
 from django.views.generic import View
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 
 from .forms import CommentForm, TagForm, PostForm
 from .models import Post, Tag
-from .mixins import (
-    OblectCreateMixin, ObjectUpdateMixin, ObjectDeleteMixin
-)
 
 
 class PostCreateView(LoginRequiredMixin, CreateView):
@@ -120,41 +116,43 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('post_list_url')
 
 
-class TagDetail(LoginRequiredMixin, View):
-    def get(self, request, slug):
-        obj = get_object_or_404(Tag, slug__iexact=slug)
-        posts = obj.posts.all()
-        page, is_paginated = paginator(request, posts)
-        return render(request, 'blog/post_list.html', context={
-            'detail': True,
-            'admin_object': obj,
-            'page_object': page,
-            'is_paginated': is_paginated,
-            'title': obj.title,
-        })
-
-
-class TagCreate(LoginRequiredMixin, OblectCreateMixin, View):
-    model_form = TagForm
-    template = 'blog/tag_create.html'
-    raise_exception = True
-
-
-class TagUpdate(LoginRequiredMixin, ObjectUpdateMixin, View):
+class TagCreateView(LoginRequiredMixin, CreateView):
+    """Create a tag."""
     model = Tag
-    model_form = TagForm
-    template = 'blog/tag_update.html'
+    form_class = TagForm
+    template_name = 'blog/tag_create.html'
+    success_url = reverse_lazy('post_list_url')
     raise_exception = True
 
 
-class TagDelete(LoginRequiredMixin, ObjectDeleteMixin, View):
+class TagListView(LoginRequiredMixin, ListView):
+    """List of tags."""
     model = Tag
-    template = 'blog/tag_delete.html'
-    redirect_url = 'tags_list_url'
+
+
+class TagDetailView(LoginRequiredMixin, ListView):
+    """Output of posts of a specific tag."""
+    template_name = 'blog/post_list.html'
+    paginate_by = 3
+
+    def get_queryset(self):
+        """Selecting posts by tag."""
+        print(f"slug: {self.kwargs.get('slug')}")
+        tag = Tag.objects.get(title=self.kwargs.get('slug'))
+        return tag.posts.all()
+
+
+class TagUpdateView(LoginRequiredMixin, UpdateView):
+    """Update a tag"""
+    model = Tag
+    form_class = TagForm
+    template_name = 'blog/tag_update.html'
     raise_exception = True
 
 
-@login_required()
-def tags_list(request):
-    tags = Tag.objects.all()
-    return render(request, 'blog/tag_list.html', context={'tags': tags})
+class TagDelete(LoginRequiredMixin, DeleteView):
+    """Delete a tag."""
+    model = Tag
+    template_name = 'blog/tag_delete.html'
+    success_url = reverse_lazy('tag_list_url')
+    raise_exception = True

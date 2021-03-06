@@ -2,7 +2,7 @@ from django.urls import path
 
 from .views import (
     PostCreateView, PostDeleteView, PostDetailView, PostListView, PostUpdateView,
-    TagCreate, TagDelete, TagDetail, tags_list, TagUpdate,
+    TagCreateView, TagListView, TagDetailView, TagDelete, TagUpdateView,
 )
 
 
@@ -12,9 +12,9 @@ urlpatterns = [
     path('post/<slug>/', PostDetailView.as_view(), name='post_detail_url'),
     path('post/<slug>/update/', PostUpdateView.as_view(), name='post_update_url'),
     path('post/<slug>/delete/', PostDeleteView.as_view(), name='post_delete_url'),
-    path('tags/', tags_list, name='tags_list_url'),
-    path('tag/create/', TagCreate.as_view(), name='tag_create_url'),
-    path('tag/<slug>/', TagDetail.as_view(), name='tag_detail_url'),
-    path('tag/<slug>/update/', TagUpdate.as_view(), name='tag_update_url'),
+    path('tags/', TagListView.as_view(), name='tag_list_url'),
+    path('tag/create/', TagCreateView.as_view(), name='tag_create_url'),
+    path('tag/<slug>/', TagDetailView.as_view(), name='tag_detail_url'),
+    path('tag/<slug>/update/', TagUpdateView.as_view(), name='tag_update_url'),
     path('tag/<slug>/delete/', TagDelete.as_view(), name='tag_delete_url')
 ]
