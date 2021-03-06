@@ -108,8 +108,8 @@
                             <div class="widget no-box">
                                 <h5 class="widget-title">Авторизация<span></span></h5>
                                 {% if request.user.is_authenticated %}
-                                    Вы успешно вошли в систему как
-                                    <p><a href="{% url 'dashboard' %}" style="color: white;">{{ request.user }}</a></p>
+                                    Вы успешно авторизовались в
+                                    <p>системе как <a href="{% url 'dashboard' %}" style="color: white;">{{ request.user }}</a></p>
                                     <a class="btn btn-footer" href="{% url 'logout' %}">Выйти из системы</a>
                                 {% else %}
                                     <p>Авторизуйтесь, чтобы получить доступ к информационным ресурсам</p>
