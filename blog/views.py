@@ -1,5 +1,9 @@
+from textwrap import dedent
+
+from django.db import connection
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.views.generic import View
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
@@ -32,33 +36,20 @@ class PostListView(LoginRequiredMixin, ListView):
         return posts
 
 
-# class PostDetailView(LoginRequiredMixin, TemplateView):
-#     """Dispaling a specific post."""
-#     # model = Post
-#     template_name = 'blog/post_detail.html'
-#
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         post = get_object_or_404(Post, slug=context['slug'])
-#         context['post'] = post
-#         comments = post.comments.all()
-#         context['comments'] = comments
-#         context['comment_form'] = CommentForm()
-#         return context
-
-
 class PostDetailView(LoginRequiredMixin, View):
     """Dispaling a specific post."""
     def get(self, request, slug):
         obj = get_object_or_404(Post, slug__iexact=slug)
         comments = obj.comments.all()
         comment_form = CommentForm()
+        tags = obj.tags.all()
         return render(request, 'blog/post_detail.html', context={
             'post': obj,
             'admin_object': obj,
             'detail': True,
             'comments': comments,
             'comment_form': comment_form,
+            'tags': tags,
         })
 
     def post(self, request, slug):
@@ -71,10 +62,14 @@ class PostDetailView(LoginRequiredMixin, View):
             new_comment.user = request.user
             new_comment.save()
             comment_form = CommentForm()
+            tags = obj.tags.all()
         return render(request, 'blog/post_detail.html', context={
             'post': obj,
+            'admin_object': obj,
+            'detail': True,
             'comments': comments,
             'comment_form': comment_form,
+            'tags': tags,
         })
 
 
@@ -83,30 +78,6 @@ class PostUpdateView(LoginRequiredMixin, UpdateView):
     model = Post
     form_class = PostForm
     template_name = 'blog/post_update.html'
-
-
-# class PostDeleteView(LoginRequiredMixin, View):
-#     """Deleting a post directly from the database."""
-#     def get(self, request, pk):
-#         return render(request, 'blog/post_delete.html', context={
-#             'pk': pk,
-#         })
-#
-#     def post(self, request, pk):
-#         with connection.cursor() as cursor:
-#             cursor.execute(
-#                 dedent('''\
-#                     delete from blog_post_tags
-#                     where post_id=%s;'''),
-#                 [ pk ]
-#             )
-#             cursor.execute(
-#                 dedent('''\
-#                     delete from blog_post
-#                     where id=%s;'''),
-#                 [ pk ]
-#             )
-#         return HttpResponseRedirect(reverse('post_list_url'))
 
 
 class PostDeleteView(LoginRequiredMixin, DeleteView):
@@ -137,8 +108,7 @@ class TagDetailView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         """Selecting posts by tag."""
-        print(f"slug: {self.kwargs.get('slug')}")
-        tag = Tag.objects.get(title=self.kwargs.get('slug'))
+        tag = Tag.objects.get(slug=self.kwargs.get('slug'))
         return tag.posts.all()
 
 
@@ -156,3 +126,22 @@ class TagDelete(LoginRequiredMixin, DeleteView):
     template_name = 'blog/tag_delete.html'
     success_url = reverse_lazy('tag_list_url')
     raise_exception = True
+
+
+class TagDeleteInPost(LoginRequiredMixin, View):
+    """Delete a tag in a post."""
+    def get(self, request, post_id, tag_id):
+        return render(request, 'blog/tag_delete_in_post.html', context={
+            'post_id': post_id,
+            'tag_id': tag_id,
+        })
+
+    def post(self, request, post_id, tag_id):
+        with connection.cursor() as cursor:
+                cursor.execute(
+                    dedent('''\
+                        delete from blog_post_tags
+                        where post_id=%s and tag_id=%s;'''),
+                    [ post_id, tag_id ]
+                )
+        return HttpResponseRedirect(reverse('post_list_url'))

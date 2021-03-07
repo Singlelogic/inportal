@@ -3,6 +3,7 @@ from django.urls import path
 from .views import (
     PostCreateView, PostDeleteView, PostDetailView, PostListView, PostUpdateView,
     TagCreateView, TagListView, TagDetailView, TagDelete, TagUpdateView,
+    TagDeleteInPost,
 )
 
 
@@ -16,5 +17,6 @@ urlpatterns = [
     path('tag/create/', TagCreateView.as_view(), name='tag_create_url'),
     path('tag/<slug>/', TagDetailView.as_view(), name='tag_detail_url'),
     path('tag/<slug>/update/', TagUpdateView.as_view(), name='tag_update_url'),
-    path('tag/<slug>/delete/', TagDelete.as_view(), name='tag_delete_url')
+    path('tag/<slug>/delete/', TagDelete.as_view(), name='tag_delete_url'),
+    path('post/<post_id>/<tag_id>/', TagDeleteInPost.as_view(), name='tag_delete_in_post'),
 ]

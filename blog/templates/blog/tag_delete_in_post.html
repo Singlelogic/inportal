@@ -1,0 +1,13 @@
+{% extends 'blog/base_blog.html' %}
+
+{% block title %}
+    Удалить tag
+{% endblock %}
+
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        <h5>Вы действительно хотите у поста <b>"{{ post_id }}"</b> удалить тэг <b>"{{ tag_id }}"</b>?</h5>
+        <button type="submit" name="buttom" class="btn btn-danger bottom-10px">Удалить</button>
+    </form>
+{% endblock %}

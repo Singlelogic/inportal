@@ -1,15 +1,9 @@
-from time import time
-
 from django.conf import settings
 from django.db import models
 from django.shortcuts import reverse
 from django.utils.text import slugify
 
 from .utils import is_ru
-
-# def gen_slug(s):
-#     new_slug = slugify(s, allow_unicode=True)
-#     return new_slug + '-' + str(int(time()))
 
 
 class Post(models.Model):
@@ -19,6 +13,9 @@ class Post(models.Model):
     tags = models.ManyToManyField('Tag', blank=True, related_name='posts')
     date_pub = models.DateTimeField(auto_now_add=True)
     image_preview = models.ImageField(upload_to='images/')
+
+    def __str__(self):
+        return self.title
 
     def get_absolute_url(self):
         return reverse('post_detail_url', kwargs={'slug': self.slug})
@@ -38,9 +35,6 @@ class Post(models.Model):
             self.slug = is_ru(self.title)
         super().save(*args, **kwargs)
 
-    def __str__(self):
-        return self.title
-
     class Meta:
         ordering = ['-date_pub']
 
@@ -50,9 +44,8 @@ class Tag(models.Model):
     slug = models.SlugField(max_length=50, unique=True)
 
     def save(self, *args, **kwargs):
-        self.slug = self.title
+        self.slug = is_ru(self.title)
         super().save(*args, **kwargs)
-
 
     def get_absolute_url(self):
         return reverse('tag_detail_url', kwargs={'slug': self.slug})

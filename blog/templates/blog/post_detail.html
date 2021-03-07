@@ -16,6 +16,12 @@
     <p>
         {{ post.body|safe }}
     </p>
+
+    <b>Tags:</b>
+    {% for tag in tags %}
+        {{ tag }} <a href="{% url 'tag_delete_in_post' post_id=post.pk tag_id=tag.pk %}" style="color: red">x</a>
+    {% endfor %}
+
 {% endblock %}
 
 {% block comments %}
