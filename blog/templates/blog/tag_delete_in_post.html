@@ -7,7 +7,8 @@
 {% block content %}
     <form method="post">
         {% csrf_token %}
-        <h5>Вы действительно хотите у поста <b>"{{ post_id }}"</b> удалить тэг <b>"{{ tag_id }}"</b>?</h5>
+        <h5>Вы действительно хотите удалить тэг <b>'{{ tag|title }}'</b> у поста <b>'{{ post|title }}'</b>?</h5>
+        <a href="{% url 'post_detail_url' slug=post.slug %}" class="btn btn-secondary bottom-10px">Отмена</a>
         <button type="submit" name="buttom" class="btn btn-danger bottom-10px">Удалить</button>
     </form>
 {% endblock %}

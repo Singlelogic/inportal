@@ -131,17 +131,16 @@ class TagDelete(LoginRequiredMixin, DeleteView):
 class TagDeleteInPost(LoginRequiredMixin, View):
     """Delete a tag in a post."""
     def get(self, request, post_id, tag_id):
+        post = get_object_or_404(Post, id=post_id)
+        tag = get_object_or_404(Tag, id=tag_id)
         return render(request, 'blog/tag_delete_in_post.html', context={
-            'post_id': post_id,
-            'tag_id': tag_id,
+            'post': post,
+            'tag': tag,
         })
 
     def post(self, request, post_id, tag_id):
-        with connection.cursor() as cursor:
-                cursor.execute(
-                    dedent('''\
-                        delete from blog_post_tags
-                        where post_id=%s and tag_id=%s;'''),
-                    [ post_id, tag_id ]
-                )
-        return HttpResponseRedirect(reverse('post_list_url'))
+        post = get_object_or_404(Post, id=post_id)
+        tag = get_object_or_404(Tag, id=tag_id)
+        post.tags.remove(tag)
+        return HttpResponseRedirect(reverse('post_detail_url',
+                                            kwargs={'slug': post.slug}))
