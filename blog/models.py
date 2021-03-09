@@ -78,6 +78,10 @@ class Comment(models.Model):
     def __str__(self):
         return self.body
 
+    def get_post_url(self):
+        """Get the url of the post to which this comment belongs."""
+        return reverse('post_detail_url', kwargs={'slug': self.post.slug})
+
 
 def get_image_filename(instance, filename):
     title = instance.post.title

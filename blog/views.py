@@ -8,7 +8,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 
 from .forms import CommentForm, TagForm, PostForm
-from .models import Post, Tag
+from .models import Comment, Post, Tag
 
 
 class PostCreateView(LoginRequiredMixin, CreateView):
@@ -147,3 +147,30 @@ class TagDeleteInPost(LoginRequiredMixin, View):
         post.tags.remove(tag)
         return HttpResponseRedirect(reverse('post_detail_url',
                                             kwargs={'slug': post.slug}))
+
+
+class CommentUpdateView(LoginRequiredMixin, UpdateView):
+    """Update a comment."""
+    model = Comment
+    form_class = CommentForm
+    template_name = 'blog/comment_update.html'
+    raise_exception = True
+    success_url = reverse_lazy('post_list_url')
+
+    def get_success_url(self):
+        """Getting the url of the post in which this comment belongs."""
+        comment = Comment.objects.get(pk=self.kwargs['pk'])
+        success_url = reverse('post_detail_url', kwargs={'slug': comment.post.slug})
+        return success_url
+
+
+class CommentDeleteView(LoginRequiredMixin, DeleteView):
+    """Delete a comment."""
+    model = Comment
+    template_name = 'blog/comment_delete.html'
+    raise_exception = True
+
+    def get_success_url(self):
+        """Getting the url of the post in which this comment belongs."""
+        comment = Comment.objects.get(pk=self.kwargs['pk'])
+        return comment.get_post_url()

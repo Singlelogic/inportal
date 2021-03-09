@@ -36,6 +36,10 @@
                                 <div class="card">
                                     <div class="card-header">
                                         Комментарий {{ forloop.counter }} от <b>{{ comment.user }}</b> {{ comment.created }}
+                                        {% if post.user == request.user %}
+                                            <a href="{% url 'comment_update_url' pk=comment.id %}">редактировать</a>
+                                            <a href="{% url 'comment_delete_url' pk=comment.id %}">удалить</a>
+                                        {% endif %}
                                     </div>
                                     <div class="card-body-change">
                                         <blockquote>
