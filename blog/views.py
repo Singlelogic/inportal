@@ -1,6 +1,3 @@
-from textwrap import dedent
-
-from django.db import connection
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse, reverse_lazy
@@ -19,6 +16,12 @@ class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     form_class = PostForm
     template_name = 'blog/post_create.html'
+
+    def form_valid(self, form):
+        """Adding an author to a post."""
+        post = form.instance
+        post.user = self.request.user
+        return super().form_valid(form)
 
 
 class PostListView(LoginRequiredMixin, ListView):

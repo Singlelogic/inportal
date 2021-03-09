@@ -1,6 +1,3 @@
-import re
-
-
 def is_ru(name: str) -> str:
     dictionary = {'а': 'a', 'б': 'b', 'в': 'v', 'г': 'g', 'д': 'd', 'е': 'e',
                   'ё': 'e', 'ж': 'zh', 'з': 'z', 'и': 'i', 'й': 'i', 'к': 'k',
@@ -10,8 +7,7 @@ def is_ru(name: str) -> str:
                   'э': 'e', 'ю': 'u', 'я': 'ja', ' ': '_',
                   }
     name = name.lower()
-    if re.match(r'[а-яА-ЯёЁ]', name):
-        for letter in name:
-            if letter in dictionary:
-                name = name.replace(letter, dictionary[letter])
+    for letter in name:
+        if letter in dictionary:
+            name = name.replace(letter, dictionary[letter])
     return name

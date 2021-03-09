@@ -13,6 +13,7 @@
 <!--                <h5 class="card-title">{{ post.title }}</h5>-->
                 <h5><a href="{{ post.get_absolute_url }}" class="card-title" style="color: black;">{{ post.title }}</a></h5>
                 <p class="card-text">{{ post.body|safe|truncatechars_html:100 }}</p>
+                <p>Автор: {{ post.user }}</p>
                 <p class="card-text inline"><small class="text-muted">{{ post.date_pub }}</small></p>
                 <a href="{{ post.get_absolute_url }}" class="btn btn-light inline" style="float: right;">Читать</a>
             </div>
