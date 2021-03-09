@@ -43,11 +43,29 @@
                                 </li>
 
 <!--############################################################## FOR BLOG ##############################################################-->
+<!--                                {% if request.user.is_authenticated and request.user.is_staff %}-->
+<!--                                    <li class="nav-item">-->
+<!--                                        <a class="nav-link" href="{% url 'post_list_url' %}" style="color: black;">Заметки</a>-->
+<!--                                    </li>-->
+<!--                                {% endif %}-->
+
                                 {% if request.user.is_authenticated and request.user.is_staff %}
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="{% url 'post_list_url' %}" style="color: black;">Заметки</a>
-                                    </li>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-secondary btn-light">
+                                            <a href="{% url 'post_list_url' %}" style="color: black;">Заметки</a>
+                                        </button>
+                                        <button type="button"
+                                                class="btn btn-secondary dropdown-toggle dropdown-toggle-split btn-light"
+                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <span class="sr-only"></span>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" href="{% url 'post_create_url' %}">Новый пост</a>
+                                            <a class="dropdown-item" href="{% url 'tag_create_url' %}">Новый тэг</a>
+                                        </div>
+                                    </div>
                                 {% endif %}
+
 <!--############################################################ END FOR BLOG ############################################################-->
 
                             </ul>

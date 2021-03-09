@@ -17,10 +17,22 @@
         {{ post.body|safe }}
     </p>
 
+    {% if post.user == request.user %}
+    <p>
+    <a href="{{ post.get_update_url }}" style="color: black">Редактировать пост</a>
+    <a href="{{ post.get_delete_url }}" style="color: black">Удалить пост</a>
+    </p>
+    {% endif %}
+
+    <p>
     <b>Tags:</b>
     {% for tag in tags %}
-        {{ tag }} <a href="{% url 'tag_delete_in_post' post_id=post.pk tag_id=tag.pk %}" style="color: red">x</a>
+        {{ tag }}
+        {% if post.user == request.user %}
+            <a href="{% url 'tag_delete_in_post' post_id=post.pk tag_id=tag.pk %}" style="color: red">x</a>
+        {% endif %}
     {% endfor %}
+    </p>
 
 {% endblock %}
 
