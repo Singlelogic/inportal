@@ -5,55 +5,22 @@
 {% endblock %}
 
 {% block content %}
-
     <h6><a href="{% url 'create_accumulator_url' %}">Добавить аккумулятор</a></h6>
 
-    <div class="container">
-        <div class="row">
-            <div class="col-sm">
-                <h5>Номер</h5>
-            </div>
-            <div class="col-sm">
-                <h5>Примечание</h5>
-            </div>
-            <div class="col-sm">
-            </div>
-            <div class="col-sm">
-            </div>
-            <div class="col-sm">
-            </div>
-            <div class="col-sm">
-            </div>
-            <div class="col-sm">
-            </div>
-            <div class="col-sm">
-            </div>
-        </div>
-    </div>
-
-    {% for accumulator in accumulator_list %}
-        <div class="container">
-            <div class="row">
-                <div class="col-sm">
-                    <h6><a href="{% url 'update_accumulator_url' pk=accumulator.pk %}">{{ accumulator.number }}</a></h6>
-                </div>
-                <div class="col-sm">
-                    <p>{{ accumulator.remark }}</p>
-                </div>
-                <div class="col-sm">
-                </div>
-                <div class="col-sm">
-                </div>
-                <div class="col-sm">
-                </div>
-                <div class="col-sm">
-                </div>
-                <div class="col-sm">
-                </div>
-                <div class="col-sm">
-                </div>
-            </div>
-        </div>
-    {% endfor %}
-
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+                <th>Номер</th>
+                <th>Примечание</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for accumulator in accumulator_list %}
+                <tr>
+                    <td><h6><a href="{% url 'update_accumulator_url' pk=accumulator.pk %}">{{ accumulator.number }}</a></h6></td>
+                    <td><p>{{ accumulator.remark }}</p></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}
