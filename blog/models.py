@@ -7,14 +7,17 @@ from .utils import is_ru
 
 
 class Post(models.Model):
-    title = models.CharField(max_length=150, db_index=True, unique=True)
+    title = models.CharField(max_length=150, db_index=True, unique=True,
+                             verbose_name='Заголовок')
     slug = models.SlugField(max_length=150, blank=True, unique=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,
-                             default=None)
-    body = models.TextField(blank=True)
-    tags = models.ManyToManyField('Tag', blank=True, related_name='posts')
-    date_pub = models.DateTimeField(auto_now_add=True)
-    image_preview = models.ImageField(upload_to='images/')
+                             default=None, verbose_name='Автор')
+    body = models.TextField(blank=True, verbose_name='Пост')
+    tags = models.ManyToManyField('Tag', blank=True, related_name='posts',
+                                  verbose_name='Тэг')
+    date_pub = models.DateTimeField(auto_now_add=True,
+                                    verbose_name='Дата публикации')
+    image_preview = models.ImageField(upload_to='images/', verbose_name='Изображение')
 
     def __str__(self):
         return self.title
