@@ -20,6 +20,10 @@
     margin-bottom: 10px;
 }
 
+a.without_underscores {
+    text-decoration: none; /* Отменяем подчеркивание у ссылки */
+}
+
 /*###################################### FOR BLOG ######################################*/
 .admin-panel { /* class admin-panel */
     border: 1px solid #999;

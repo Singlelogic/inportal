@@ -52,7 +52,7 @@
                                 {% if request.user.is_authenticated %}
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-secondary btn-light">
-                                            <a href="{% url 'post_list_url' %}" style="color: black;">Заметки</a>
+                                            <a href="{% url 'post_list_url' %}" style="color: black;" class="without_underscores">Заметки</a>
                                         </button>
                                         <button type="button"
                                                 class="btn btn-secondary dropdown-toggle dropdown-toggle-split btn-light"
