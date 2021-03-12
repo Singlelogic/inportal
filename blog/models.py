@@ -45,7 +45,8 @@ class Post(models.Model):
 
 
 class Tag(models.Model):
-    title = models.CharField(max_length=50, unique=True)
+    title = models.CharField(max_length=50, unique=True,
+                             verbose_name='Наименование')
     slug = models.SlugField(max_length=50, unique=True)
 
     def save(self, *args, **kwargs):
