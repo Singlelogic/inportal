@@ -30,11 +30,20 @@ class DataCollectTerminalListView(LoginRequiredMixin, ListView):
         """
         context = super().get_context_data(**kwargs)
         user = self.request.GET.get('user', '')
+        context['user'] = user
         accum = self.request.GET.get('accum', '')
+        context['accum'] = accum
+
         if user:
-            context['datacollectterminal_list'] = DataCollectTerminal.objects.order_by('user')
+            if user == '1':
+                context['datacollectterminal_list'] = DataCollectTerminal.objects.order_by('user')
+            else:
+                context['datacollectterminal_list'] = DataCollectTerminal.objects.order_by('-user')
         elif accum:
-            context['datacollectterminal_list'] = DataCollectTerminal.objects.order_by('accumulator')
+            if accum == '1':
+                context['datacollectterminal_list'] = DataCollectTerminal.objects.order_by('accumulator')
+            else:
+                context['datacollectterminal_list'] = DataCollectTerminal.objects.order_by('-accumulator')
         else:
             context['datacollectterminal_list'] = sorted(DataCollectTerminal.objects.all())
         return context

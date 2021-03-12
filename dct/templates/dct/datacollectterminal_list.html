@@ -14,9 +14,21 @@
             <th><a href="{% url 'list_dct_url' %}" style="color: black">Номер</a></th>
             <th>Модель</th>
             <th>Серийный номер</th>
-            <th><a href="{% url 'list_dct_url' %}?user=1" style="color: black">Пользователь</a></th>
+
+            {% if user == '1' %}
+                <th><a href="{% url 'list_dct_url' %}?user=2" style="color: black">Пользователь</a></th>
+            {% else %}
+                <th><a href="{% url 'list_dct_url' %}?user=1" style="color: black">Пользователь</a></th>
+            {% endif %}
+
             <th>MAC-адрес</th>
-            <th><a href="{% url 'list_dct_url' %}?accum=1" style="color: black">S/N аккумулятора</a></th>
+
+            {% if accum == '1' %}
+                <th><a href="{% url 'list_dct_url' %}?accum=2" style="color: black">S/N аккумулятора</a></th>
+            {% else %}
+                <th><a href="{% url 'list_dct_url' %}?accum=1" style="color: black">S/N аккумулятора</a></th>
+            {% endif %}
+
             <th>Примечание</th>
         </tr>
         </thead>
