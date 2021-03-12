@@ -26,10 +26,17 @@ class DataCollectTerminalListView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         """
         Temporarily. Rewrite!!!
-        Sorting objects by the truncated number of the name field.
+        Sort objects by user, battery number, or truncated name field number.
         """
         context = super().get_context_data(**kwargs)
-        context['datacollectterminal_list'] = sorted(DataCollectTerminal.objects.all())
+        user = self.request.GET.get('user', '')
+        accum = self.request.GET.get('accum', '')
+        if user:
+            context['datacollectterminal_list'] = DataCollectTerminal.objects.order_by('user')
+        elif accum:
+            context['datacollectterminal_list'] = DataCollectTerminal.objects.order_by('accumulator')
+        else:
+            context['datacollectterminal_list'] = sorted(DataCollectTerminal.objects.all())
         return context
 
 

@@ -11,12 +11,12 @@
     <table class="table">
         <thead class="thead-light">
         <tr>
-            <th>Номер</th>
+            <th><a href="{% url 'list_dct_url' %}" style="color: black" class="without_underscores">Номер</a></th>
             <th>Модель</th>
             <th>Серийный номер</th>
-            <th>Пользователь</th>
+            <th><a href="{% url 'list_dct_url' %}?user=1" style="color: black" class="without_underscores">Пользователь</a></th>
             <th>MAC-адрес</th>
-            <th>S/N аккумулятора</th>
+            <th><a href="{% url 'list_dct_url' %}?accum=1" style="color: black" class="without_underscores">S/N аккумулятора</a></th>
             <th>Примечание</th>
         </tr>
         </thead>
