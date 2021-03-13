@@ -11,22 +11,76 @@
     <table class="table">
         <thead class="thead-light">
         <tr>
-            <th><a href="{% url 'list_dct_url' %}" style="color: black">Номер</a></th>
+
+            {% if number == '1' %}
+                <th>
+                    <a href="{% url 'list_dct_url' %}?number=2" class="without_underscores" style="color: black">Номер
+                        <img class="arrow" src="/static/down_arrow.png" alt="v">
+                    </a>
+                </th>
+            {% elif number == '2' %}
+                <th>
+                    <a href="{% url 'list_dct_url' %}?number=1" class="without_underscores" style="color: black">Номер
+                        <img class="arrow" src="/static/up_arrow.png" alt="^">
+                    </a>
+                </th>
+            {% elif not number and not user and not accum %}
+                <th>
+                    <a href="{% url 'list_dct_url' %}?number=2" class="without_underscores" style="color: black">Номер
+                        <img class="arrow" src="/static/down_arrow.png" alt="v">
+                    </a>
+                </th>
+            {% else %}
+                <th>
+                    <a href="{% url 'list_dct_url' %}?number=1" class="without_underscores" style="color: black">Номер
+                        <img class="arrow" src="/static/down_arrow_grey.png" alt="v" style="color: grey">
+                    </a>
+                </th>
+            {% endif %}
+
             <th>Модель</th>
             <th>Серийный номер</th>
 
             {% if user == '1' %}
-                <th><a href="{% url 'list_dct_url' %}?user=2" style="color: black">Пользователь</a></th>
+                <th>
+                    <a href="{% url 'list_dct_url' %}?user=2" class="without_underscores" style="color: black">Пользователь
+                        <img class="arrow" src="/static/down_arrow.png" alt="v">
+                    </a>
+                </th>
+            {% elif user == '2' %}
+                <th>
+                    <a href="{% url 'list_dct_url' %}?user=1" class="without_underscores" style="color: black">Пользователь
+                        <img class="arrow" src="/static/up_arrow.png" alt="^">
+                    </a>
+                </th>
             {% else %}
-                <th><a href="{% url 'list_dct_url' %}?user=1" style="color: black">Пользователь</a></th>
+                <th>
+                    <a href="{% url 'list_dct_url' %}?user=1" class="without_underscores" style="color: black">Пользователь
+                        <img class="arrow" src="/static/down_arrow_grey.png" alt="v" style="color: grey">
+                    </a>
+                </th>
             {% endif %}
 
             <th>MAC-адрес</th>
 
             {% if accum == '1' %}
-                <th><a href="{% url 'list_dct_url' %}?accum=2" style="color: black">S/N аккумулятора</a></th>
+                <th>
+                    <a href="{% url 'list_dct_url' %}?accum=2" class="without_underscores" style="color: black">S/N аккумулятора
+                        <img class="arrow" src="/static/down_arrow.png" alt="v">
+                    </a>
+                </th>
+            {% elif accum == '2' %}
+                <th>
+                    <a href="{% url 'list_dct_url' %}?accum=1" class="without_underscores" style="color: black">S/N аккумулятора
+                        <img class="arrow" src="/static/up_arrow.png" alt="^">
+                    </a>
+                </th>
             {% else %}
-                <th><a href="{% url 'list_dct_url' %}?accum=1" style="color: black">S/N аккумулятора</a></th>
+                <th>
+                    <a href="{% url 'list_dct_url' %}?accum=1" class="without_underscores" style="color: black">S/N аккумулятора
+                        <img class="arrow" src="/static/down_arrow_grey.png" alt="v" style="color: grey">
+                    </a>
+                </th>
             {% endif %}
 
             <th>Примечание</th>

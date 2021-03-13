@@ -29,12 +29,16 @@ class DataCollectTerminalListView(LoginRequiredMixin, ListView):
         Sort objects by user, battery number, or truncated name field number.
         """
         context = super().get_context_data(**kwargs)
+        number = self.request.GET.get('number', '')
+        context['number'] = number
         user = self.request.GET.get('user', '')
         context['user'] = user
         accum = self.request.GET.get('accum', '')
         context['accum'] = accum
 
-        if user:
+        if number == '2':
+            context['datacollectterminal_list'] = sorted(DataCollectTerminal.objects.all(), reverse=True)
+        elif user:
             if user == '1':
                 context['datacollectterminal_list'] = DataCollectTerminal.objects.order_by('user')
             else:
