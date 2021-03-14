@@ -47,7 +47,8 @@ class DataCollectTerminalListView(LoginRequiredMixin, ListView):
             if accum == '1':
                 context['datacollectterminal_list'] = DataCollectTerminal.objects.order_by('accumulator')
             else:
-                context['datacollectterminal_list'] = DataCollectTerminal.objects.order_by('-accumulator')
+                # context['datacollectterminal_list'] = DataCollectTerminal.objects.order_by('-accumulator')
+                context['datacollectterminal_list'] = DataCollectTerminal.objects.raw('SELECT * FROM dct_datacollectterminal ORDER BY accumulator_id DESC NULLS LAST;')
         else:
             context['datacollectterminal_list'] = sorted(DataCollectTerminal.objects.all())
         return context
