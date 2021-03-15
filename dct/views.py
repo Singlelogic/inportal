@@ -10,7 +10,6 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .forms import DataCollectTerminalForm
 from .mixins import ModifiedMethodFormValidMixim
 from .models import DataCollectTerminal, Accumulator
-from .utils import accum_lifetime
 
 
 class DataCollectTerminalCreateView(LoginRequiredMixin, ModifiedMethodFormValidMixim, CreateView):
@@ -111,12 +110,6 @@ class AccumulatorUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'dct/accumulator_update.html'
     fields = ['number', 'remark']
     success_url = reverse_lazy('list_accumulator_url')
-
-    def get_context_data(self, **kwargs):
-        """Adding the number of days used by the battery to the form."""
-        context = super().get_context_data(**kwargs)
-        context['lifetime'] = accum_lifetime(context['object'])
-        return context
 
 
 class AccumulatorDeleteView(LoginRequiredMixin, DeleteView):

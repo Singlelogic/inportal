@@ -1,3 +1,5 @@
+from django.utils import timezone
+
 from django.db import models
 from django.urls import reverse
 
@@ -97,6 +99,23 @@ class Accumulator(models.Model):
         2. Uninstalled
         """
         AccumulatorDate.objects.create(state=state, accumulator=self)
+
+    def lifetime(self) -> int:
+        """Returns the number of days worked by the battery."""
+        sum = 0
+        if self.accumulatordate_set.all():
+            for i in self.accumulatordate_set.all():
+                if i.state == 1:
+                    start = i.date
+                else:
+                    stop = i.date
+                    delta = stop - start
+                    sum += delta.days
+            if i.state == 1:
+                delta = timezone.now() - start
+                sum += delta.days
+            return sum
+        return 0
 
 
 class AccumulatorDate(models.Model):

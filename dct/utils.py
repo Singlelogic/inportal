@@ -1,7 +1,5 @@
 import re
 
-from django.utils import timezone
-
 
 def is_ru(name: str) -> str:
     dictionary = {'а': 'a', 'б': 'b', 'в': 'v', 'г': 'g', 'д': 'd', 'е': 'e',
@@ -17,21 +15,3 @@ def is_ru(name: str) -> str:
             if letter in dictionary:
                 name = name.replace(letter, dictionary[letter])
     return name
-
-
-def accum_lifetime(obj: 'Accumulator') -> int:
-    """Returns the number of days worked by the battery."""
-    sum = 0
-    if obj.accumulatordate_set.all():
-        for i in obj.accumulatordate_set.all():
-            if i.state == 1:
-                start = i.date
-            else:
-                stop = i.date
-                delta = stop - start
-                sum += delta.days
-        if i.state == 1:
-            delta = timezone.now() - start
-            sum += delta.days
-        return sum
-    return 0
