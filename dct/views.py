@@ -1,3 +1,5 @@
+from textwrap import dedent
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
@@ -37,18 +39,28 @@ class DataCollectTerminalListView(LoginRequiredMixin, ListView):
         context['accum'] = accum
 
         if number == '2':
-            context['datacollectterminal_list'] = sorted(DataCollectTerminal.objects.all(), reverse=True)
+            context['datacollectterminal_list'] = sorted(DataCollectTerminal.objects.all(),
+                                                         reverse=True)
         elif user:
             if user == '1':
                 context['datacollectterminal_list'] = DataCollectTerminal.objects.order_by('user')
             else:
-                context['datacollectterminal_list'] = DataCollectTerminal.objects.order_by('-user')
+                context['datacollectterminal_list'] = DataCollectTerminal.objects.raw(
+                    dedent('''\
+                        SELECT *
+                        FROM dct_datacollectterminal
+                        LEFT JOIN client_client ON user_id=client_client.id
+                        ORDER BY client_client.client DESC NULLS LAST;'''))
         elif accum:
             if accum == '1':
-                context['datacollectterminal_list'] = DataCollectTerminal.objects.order_by('accumulator')
+                context['datacollectterminal_list'] = \
+                    DataCollectTerminal.objects.order_by('accumulator')
             else:
-                # context['datacollectterminal_list'] = DataCollectTerminal.objects.order_by('-accumulator')
-                context['datacollectterminal_list'] = DataCollectTerminal.objects.raw('SELECT * FROM dct_datacollectterminal ORDER BY accumulator_id DESC NULLS LAST;')
+                context['datacollectterminal_list'] = DataCollectTerminal.objects.raw(
+                    dedent('''\
+                        SELECT *
+                        FROM dct_datacollectterminal
+                        ORDER BY accumulator_id DESC NULLS LAST;'''))
         else:
             context['datacollectterminal_list'] = sorted(DataCollectTerminal.objects.all())
         return context
