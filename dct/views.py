@@ -30,36 +30,29 @@ class DataCollectTerminalListView(LoginRequiredMixin, ListView):
         Sort objects by user, battery number, or truncated name field number.
         """
         context = super().get_context_data(**kwargs)
-        number = self.request.GET.get('number', '')
-        context['number'] = number
-        user = self.request.GET.get('user', '')
-        context['user'] = user
-        accum = self.request.GET.get('accum', '')
-        context['accum'] = accum
+        context['order'] = self.request.GET.get('order', '')
 
-        if number == '2':
+        if context['order'] == '-number':
             context['datacollectterminal_list'] = sorted(DataCollectTerminal.objects.all(),
                                                          reverse=True)
-        elif user:
-            if user == '1':
-                context['datacollectterminal_list'] = DataCollectTerminal.objects.order_by('user')
-            else:
+        elif context['order'] == 'user':
+            context['datacollectterminal_list'] = DataCollectTerminal.objects.order_by('user')
+        elif context['order'] == '-user':
                 context['datacollectterminal_list'] = DataCollectTerminal.objects.raw(
                     dedent('''\
                         SELECT *
                         FROM dct_datacollectterminal
                         LEFT JOIN client_client ON user_id=client_client.id
                         ORDER BY client_client.client DESC NULLS LAST;'''))
-        elif accum:
-            if accum == '1':
-                context['datacollectterminal_list'] = \
-                    DataCollectTerminal.objects.order_by('accumulator')
-            else:
-                context['datacollectterminal_list'] = DataCollectTerminal.objects.raw(
-                    dedent('''\
-                        SELECT *
-                        FROM dct_datacollectterminal
-                        ORDER BY accumulator_id DESC NULLS LAST;'''))
+        elif context['order'] == 'accum':
+            context['datacollectterminal_list'] = \
+                DataCollectTerminal.objects.order_by('accumulator')
+        elif context['order'] == '-accum':
+            context['datacollectterminal_list'] = DataCollectTerminal.objects.raw(
+                dedent('''\
+                    SELECT *
+                    FROM dct_datacollectterminal
+                    ORDER BY accumulator_id DESC NULLS LAST;'''))
         else:
             context['datacollectterminal_list'] = sorted(DataCollectTerminal.objects.all())
         return context
