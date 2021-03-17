@@ -15,7 +15,7 @@
             <p><h6><b>Колличество отработанных дней АКБ: {{ datacollectterminal.accumulator.lifetime }}</b></h6></p>
         {% endif %}
         <p><a href="{% url 'list_dctremark_url' slug=object.slug %}">Показать историю примечаний</a> </p>
-        <a href="{% url 'list_dct_url' %}" class="btn btn-secondary bottom-10px">Назад</a>
+        <a href="{% url 'list_dct_url' %}?order={{ order }}" class="btn btn-secondary bottom-10px">Назад</a>
         <input type="submit" value="Сохранить" class="btn btn-secondary bottom-10px">
         <a href="{% url 'delete_dct_url' slug=object.slug %}" class="btn btn-danger bottom-10px">Удалить</a>
     </form>

@@ -89,7 +89,7 @@
         <tbody>
         {% for dct in datacollectterminal_list %}
             <tr>
-                <td><h6><a href="{% url 'update_dct_url' slug=dct.slug %}">{{ dct.name }}</a></h6></td>
+                <td><h6><a href="{% url 'update_dct_url' slug=dct.slug %}?order={{ order }}">{{ dct.name }}</a></h6></td>
                 <td>{{ dct.get_model_display }}</td>
                 <td>{{ dct.serial_number }}</td>
                 <td>

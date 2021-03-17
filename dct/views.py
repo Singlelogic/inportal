@@ -66,6 +66,11 @@ class DataCollectTerminalUpdate(LoginRequiredMixin, ModifiedMethodFormValidMixim
               'accumulator', 'remark']
     success_url = reverse_lazy('list_dct_url')
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['order'] = self.request.GET.get('order', '')
+        return context
+
 
 class DataCollectTerminalDeleteView(LoginRequiredMixin, DeleteView):
     """Delete data collection terminal."""
