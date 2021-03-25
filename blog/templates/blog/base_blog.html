@@ -2,11 +2,18 @@
 
 {% block content %}
 
-    {% block content_blog %}
-    {% endblock %}
+    <div class="container">
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-9">
+                {% block content_blog %}
+                {% endblock %}
 
-    {% block comments %}
-    {% endblock %}
+                {% block comments %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
 
     {% block admin %}
         {% if request.user.is_authenticated and request.user.is_staff %}
