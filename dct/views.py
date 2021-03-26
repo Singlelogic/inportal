@@ -73,10 +73,15 @@ class DataCollectTerminalUpdate(LoginRequiredMixin, ModifiedMethodFormValidMixim
         context['order'] = self.request.GET.get('order', '')
         return context
 
-    def form_valid(self, form):
+    # def form_valid(self, form):
+    #     """Redirects to a page with the sorting that was set when you went to this page."""
+    #     order = self.request.GET.get('order', '')
+    #     return HttpResponseRedirect(f"{reverse_lazy('list_dct_url')}?order={order}")
+
+    def get_success_url(self):
         """Redirects to a page with the sorting that was set when you went to this page."""
         order = self.request.GET.get('order', '')
-        return HttpResponseRedirect(f"{reverse_lazy('list_dct_url')}?order={order}")
+        return f"{reverse_lazy('list_dct_url')}?order={order}"
 
 
 class DataCollectTerminalDeleteView(LoginRequiredMixin, DeleteView):
