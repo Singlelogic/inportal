@@ -1,7 +1,6 @@
 from textwrap import dedent
 
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic.base import TemplateView
@@ -73,11 +72,6 @@ class DataCollectTerminalUpdate(LoginRequiredMixin, ModifiedMethodFormValidMixim
         context['order'] = self.request.GET.get('order', '')
         return context
 
-    # def form_valid(self, form):
-    #     """Redirects to a page with the sorting that was set when you went to this page."""
-    #     order = self.request.GET.get('order', '')
-    #     return HttpResponseRedirect(f"{reverse_lazy('list_dct_url')}?order={order}")
-
     def get_success_url(self):
         """Redirects to a page with the sorting that was set when you went to this page."""
         order = self.request.GET.get('order', '')
@@ -110,11 +104,6 @@ class DataCollectTerminalDeleteView(LoginRequiredMixin, DeleteView):
         """Redirects to a page with the sorting that was set when you went to this page."""
         order = self.request.GET.get('order', '')
         return f"{reverse_lazy('list_dct_url')}?order={order}"
-
-    # def form_valid(self, form):
-    #     """Redirects to a page with the sorting that was set when you went to this page."""
-    #     order = self.request.GET.get('order', '')
-    #     return HttpResponseRedirect(f"{reverse_lazy('list_dct_url')}?order={order}")
 
 
 class AccumulatorCreateView(LoginRequiredMixin, CreateView):
