@@ -45,7 +45,7 @@ class Post(models.Model):
     def preview_body(self) -> str:
         """Preview of the post body."""
         soup = BeautifulSoup(self.body)
-        return soup.get_text('\n\n').replace('\n\n', '<br>')
+        return soup.get_text('<br>')
 
     class Meta:
         ordering = ['-date_pub']
