@@ -1,3 +1,5 @@
+from bs4 import BeautifulSoup
+
 from django.conf import settings
 from django.db import models
 from django.shortcuts import reverse
@@ -39,6 +41,11 @@ class Post(models.Model):
         else:
             self.slug = is_ru(self.title)
         super().save(*args, **kwargs)
+
+    def preview_body(self) -> str:
+        """Preview of the post body."""
+        soup = BeautifulSoup(self.body)
+        return soup.get_text('\n\n').replace('\n\n', '<br>')
 
     class Meta:
         ordering = ['-date_pub']
