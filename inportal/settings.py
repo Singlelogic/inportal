@@ -49,7 +49,8 @@ INSTALLED_APPS = [
     'dct.apps.DctConfig',
     'client.apps.ClientConfig',
     'blog.apps.BlogConfig',
-    'django_summernote',
+    'ckeditor',
+    'ckeditor_uploader',
 ]
 
 MIDDLEWARE = [
@@ -147,7 +148,15 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-"""############################################ FOR BLOG ############################################"""
-X_FRAME_OPTIONS = 'SAMEORIGIN'
-SUMMERNOTE_THEME = 'bs4'
-"""########################################## END FOR BLOG ##########################################"""
+######  CKEDITOR CONFIGURATION ######
+CKEDITOR_JQUERY_URL = 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js'
+
+CKEDITOR_UPLOAD_PATH = 'uploads/'
+CKEDITOR_IMAGE_BACKEND = "pillow"
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': None,
+    },
+}
+#### END CKEDITOR CONFIGURATION ####

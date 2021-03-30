@@ -7,6 +7,7 @@
 {% block content %}
     <form action="{{ post.get_update_url }}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
+        {{ form.media }}
         {% for field in form %}
             <div class="form-group">
                 {% if field.errors %}

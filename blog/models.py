@@ -1,4 +1,4 @@
-from bs4 import BeautifulSoup
+from ckeditor_uploader.fields import RichTextUploadingField
 
 from django.conf import settings
 from django.db import models
@@ -14,7 +14,7 @@ class Post(models.Model):
     slug = models.SlugField(max_length=150, blank=True, unique=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,
                              default=None, verbose_name='Автор')
-    body = models.TextField(blank=True, verbose_name='Пост')
+    body = RichTextUploadingField(verbose_name='Пост')
     tags = models.ManyToManyField('Tag', blank=True, related_name='posts',
                                   verbose_name='Тэг')
     date_pub = models.DateTimeField(auto_now_add=True,
@@ -41,11 +41,6 @@ class Post(models.Model):
         else:
             self.slug = is_ru(self.title)
         super().save(*args, **kwargs)
-
-    def preview_body(self) -> str:
-        """Preview of the post body."""
-        soup = BeautifulSoup(self.body)
-        return soup.get_text('<br>')
 
     class Meta:
         ordering = ['-date_pub']
