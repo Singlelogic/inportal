@@ -7,7 +7,7 @@ from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
-from .forms import DataCollectTerminalForm
+from .forms import DataCollectTerminalCreateForm, DataCollectTerminalUpdateForm
 from .mixins import ModifiedMethodFormValidMixim
 from .models import DataCollectTerminal, Accumulator
 
@@ -16,7 +16,7 @@ class DataCollectTerminalCreateView(LoginRequiredMixin, ModifiedMethodFormValidM
     """Create data collection terminal."""
     model = DataCollectTerminal
     template_name = 'dct/datacollectterminal_create.html'
-    form_class = DataCollectTerminalForm
+    form_class = DataCollectTerminalCreateForm
     success_url = reverse_lazy('list_dct_url')
 
 
@@ -62,9 +62,8 @@ class DataCollectTerminalUpdate(LoginRequiredMixin, ModifiedMethodFormValidMixim
     """Update the selected data collection terminal."""
     model = DataCollectTerminal
     template_name = 'dct/datacollectterminal_update.html'
-    fields = ['name', 'model', 'serial_number', 'mac_address', 'user',
-              'accumulator', 'remark']
     success_url = reverse_lazy('list_dct_url')
+    form_class = DataCollectTerminalUpdateForm
 
     def get_context_data(self, **kwargs):
         """Adding a sortation order to the context."""
