@@ -103,7 +103,7 @@
                         <p>{{ dct.accumulator }}</p>
                     {% endif %}
                 </td>
-                <td><p>{{ dct.remark }}</p></td>
+                <td><p>{{ dct.remark|truncatechars:30 }}</p></td>
             </tr>
         {% endfor %}
         </tbody>
