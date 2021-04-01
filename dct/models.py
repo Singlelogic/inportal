@@ -73,9 +73,9 @@ class DataCollectTerminalRemark(models.Model):
 
 class Accumulator(models.Model):
     """Accumulator for Date Collect Terminal"""
-    number = models.IntegerField(primary_key=True, db_index=True,
-                                 verbose_name='Номер')
+    number = models.IntegerField(primary_key=True, db_index=True, verbose_name='Номер')
     remark = models.TextField(null=True, blank=True, verbose_name='Примечание')
+    date_purchase = models.DateTimeField(auto_now_add=True, verbose_name='Дата закупки')
 
     def __str__(self):
         return str(self.number)
