@@ -14,25 +14,25 @@
 
             {% if order == 'number' %}
                 <th>
-                    <a href="{% url 'list_dct_url' %}?order=-number" class="without_underscores" style="color: black">Номер
+                    <a href="?order=-number" class="without_underscores" style="color: black">Номер
                         <img class="arrow" src="/static/down_arrow.png" alt="v">
                     </a>
                 </th>
             {% elif order == '-number' %}
                 <th>
-                    <a href="{% url 'list_dct_url' %}?order=number" class="without_underscores" style="color: black">Номер
+                    <a href="?order=number" class="without_underscores" style="color: black">Номер
                         <img class="arrow" src="/static/up_arrow.png" alt="^">
                     </a>
                 </th>
             {% elif not order %}
                 <th>
-                    <a href="{% url 'list_dct_url' %}?order=-number" class="without_underscores" style="color: black">Номер
+                    <a href="?order=-number" class="without_underscores" style="color: black">Номер
                         <img class="arrow" src="/static/down_arrow.png" alt="v">
                     </a>
                 </th>
             {% else %}
                 <th>
-                    <a href="{% url 'list_dct_url' %}?order=number" class="without_underscores" style="color: black">Номер
+                    <a href="?order=number" class="without_underscores" style="color: black">Номер
                         <img class="arrow" src="/static/down_arrow_grey.png" alt="v" style="color: grey">
                     </a>
                 </th>
@@ -43,19 +43,19 @@
 
             {% if order == 'user' %}
                 <th>
-                    <a href="{% url 'list_dct_url' %}?order=-user" class="without_underscores" style="color: black">Пользователь
+                    <a href="?order=-user" class="without_underscores" style="color: black">Пользователь
                         <img class="arrow" src="/static/down_arrow.png" alt="v">
                     </a>
                 </th>
             {% elif order == '-user' %}
                 <th>
-                    <a href="{% url 'list_dct_url' %}?order=user" class="without_underscores" style="color: black">Пользователь
+                    <a href="?order=user" class="without_underscores" style="color: black">Пользователь
                         <img class="arrow" src="/static/up_arrow.png" alt="^">
                     </a>
                 </th>
             {% else %}
                 <th>
-                    <a href="{% url 'list_dct_url' %}?order=user" class="without_underscores" style="color: black">Пользователь
+                    <a href="?order=user" class="without_underscores" style="color: black">Пользователь
                         <img class="arrow" src="/static/down_arrow_grey.png" alt="v" style="color: grey">
                     </a>
                 </th>
@@ -65,19 +65,19 @@
 
             {% if order == 'accum' %}
                 <th>
-                    <a href="{% url 'list_dct_url' %}?order=-accum" class="without_underscores" style="color: black">S/N аккумулятора
+                    <a href="?order=-accum" class="without_underscores" style="color: black">S/N аккумулятора
                         <img class="arrow" src="/static/down_arrow.png" alt="v">
                     </a>
                 </th>
             {% elif order == '-accum' %}
                 <th>
-                    <a href="{% url 'list_dct_url' %}?order=accum" class="without_underscores" style="color: black">S/N аккумулятора
+                    <a href="?order=accum" class="without_underscores" style="color: black">S/N аккумулятора
                         <img class="arrow" src="/static/up_arrow.png" alt="^">
                     </a>
                 </th>
             {% else %}
                 <th>
-                    <a href="{% url 'list_dct_url' %}?order=accum" class="without_underscores" style="color: black">S/N аккумулятора
+                    <a href="?order=accum" class="without_underscores" style="color: black">S/N аккумулятора
                         <img class="arrow" src="/static/down_arrow_grey.png" alt="v" style="color: grey">
                     </a>
                 </th>
