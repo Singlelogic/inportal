@@ -5,7 +5,7 @@ from .models import Accumulator, DataCollectTerminal
 
 class DataCollectTerminalAdmin(admin.ModelAdmin):
     list_display = ('name', 'model', 'serial_number', 'mac_address', 'user',
-                    'accumulator', 'remark')
+                    'accumulator', 'remark', 'debited', 'repair')
     list_display_links = ('name', 'user', 'accumulator', 'remark')
 
 

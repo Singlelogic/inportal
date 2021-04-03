@@ -7,7 +7,7 @@ class DataCollectTerminalCreateForm(forms.ModelForm):
     class Meta:
         model = DataCollectTerminal
         fields = ['name', 'model', 'serial_number', 'mac_address', 'user',
-                  'accumulator', 'remark']
+                  'accumulator', 'debited', 'repair', 'remark']
 
         widgets = {
             'name': forms.TextInput(attrs={'placeholder': 'ТСД-1'}),
@@ -20,7 +20,7 @@ class DataCollectTerminalUpdateForm(forms.ModelForm):
     class Meta:
         model = DataCollectTerminal
         fields = ['name', 'model', 'serial_number', 'mac_address', 'user',
-                  'accumulator', 'remark']
+                  'accumulator', 'debited', 'repair', 'remark']
         widgets = {
             'name': forms.TextInput(attrs={'placeholder': 'ТСД-1'}),
         }

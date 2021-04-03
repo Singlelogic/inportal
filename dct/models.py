@@ -30,6 +30,8 @@ class DataCollectTerminal(models.Model):
                                        on_delete=models.PROTECT, verbose_name='Аккумулятор')
     remark = models.TextField(null=True, blank=True, verbose_name='Примечание')
     date = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
+    debited = models.BooleanField(default=False, verbose_name='Списан')
+    repair = models.BooleanField(default=False, verbose_name='В ремонте')
 
     def __str__(self):
         return self.name
