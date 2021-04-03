@@ -1,3 +1,4 @@
+from bs4 import BeautifulSoup
 from ckeditor_uploader.fields import RichTextUploadingField
 
 from django.conf import settings
@@ -41,6 +42,16 @@ class Post(models.Model):
         else:
             self.slug = is_ru(self.title)
         super().save(*args, **kwargs)
+
+    def get_preview_post(self):
+        """Get a preview of the post."""
+        soup = BeautifulSoup(self.body, features='html.parser')
+        post = soup.get_text().strip().split('\n')
+        if len(post) > 2:
+            preview = '<br>'.join(post[:2])
+        else:
+            preview = '<br>'.join(post)
+        return preview
 
     class Meta:
         ordering = ['-date_pub']
