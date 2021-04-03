@@ -109,7 +109,7 @@ class AccumulatorCreateView(LoginRequiredMixin, CreateView):
     """Create accumulator."""
     model = Accumulator
     template_name = 'dct/accumulator_create.html'
-    fields = ['number', 'remark']
+    fields = ['number', 'debited', 'remark']
     success_url = reverse_lazy('list_accumulator_url')
 
 
@@ -122,7 +122,7 @@ class AccumulatorUpdateView(LoginRequiredMixin, UpdateView):
     """Update the selected accumulator."""
     model = Accumulator
     template_name = 'dct/accumulator_update.html'
-    fields = ['number', 'remark']
+    fields = ['number', 'debited', 'remark']
     success_url = reverse_lazy('list_accumulator_url')
 
 

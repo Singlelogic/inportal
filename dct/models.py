@@ -78,6 +78,7 @@ class Accumulator(models.Model):
     number = models.IntegerField(primary_key=True, db_index=True, verbose_name='Номер')
     remark = models.TextField(null=True, blank=True, verbose_name='Примечание')
     date_purchase = models.DateTimeField(auto_now_add=True, verbose_name='Дата закупки')
+    debited = models.BooleanField(default=False, verbose_name='Списан')
 
     def __str__(self):
         return str(self.number)
