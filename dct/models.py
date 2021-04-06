@@ -1,7 +1,6 @@
-from django.utils import timezone
-
 from django.db import models
 from django.urls import reverse
+from django.utils import timezone
 
 from client.models import Client
 from .utils import is_ru
@@ -44,9 +43,7 @@ class DataCollectTerminal(models.Model):
         return super().save(*args, **kwargs)
 
     def get_absolute_url(self):
-        """
-        Method for getting the absolute path of an instance.
-        """
+        """Method for getting the absolute path of an instance."""
         return reverse('update_dct_url', kwargs={'slug': self.slug})
 
     class Meta:
@@ -55,9 +52,7 @@ class DataCollectTerminal(models.Model):
 
 
 class DataCollectTerminalRemark(models.Model):
-    """
-    Remark for data collect terminal.
-    """
+    """Remark for data collect terminal."""
     data_collect_terminal = models.ForeignKey(DataCollectTerminal, null=True,
                                               blank=True, on_delete=models.CASCADE)
     remark = models.TextField(null=True, blank=True, verbose_name='Примечание')
@@ -89,9 +84,7 @@ class Accumulator(models.Model):
         ordering = ['number']
 
     def get_absolute_url(self):
-        """
-        Method for getting the absolute path of an instance.
-        """
+        """Method for getting the absolute path of an instance."""
         return reverse('update_accumulator_url', kwargs={'pk': self.pk})
 
     def changed_status(self, state):
