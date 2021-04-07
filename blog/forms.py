@@ -2,6 +2,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 
 from .models import Comment, Post, Tag
+from .utils import is_ru
 
 
 class TagForm(forms.ModelForm):
@@ -13,14 +14,17 @@ class TagForm(forms.ModelForm):
             'title': forms.TextInput(attrs={'class': 'form-control'}),
         }
 
-    def clean_slug(self):
-        new_slug = self.cleaned_data['slug'].lower()
+    def clean_title(self):
+        new_title = self.cleaned_data['title'].lower()
+        en_new_slug = is_ru(new_title)
 
-        if new_slug == 'create':
-            raise ValidationError('Slug may not be "Create"')
-        if Tag.objects.filter(slug__iexact=new_slug).count():
-            raise ValidationError('We have "{}" slug already'.format(new_slug))
-        return new_slug
+        if new_title == 'create':
+            raise ValidationError("Тэг не может быть - 'Create'")
+        elif Tag.objects.filter(title__iexact=new_title).count():
+            raise ValidationError("Тэг '{}' уже существует".format(new_title))
+        elif Tag.objects.filter(slug__iexact=en_new_slug).count():
+            raise ValidationError("Тэг '{}' уже существует, попробуйте найти его в латинице".format(new_title))
+        return new_title
 
 
 class PostForm(forms.ModelForm):
