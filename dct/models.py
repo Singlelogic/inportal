@@ -1,9 +1,12 @@
+from textwrap import dedent
+
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
 
 from client.models import Client
 from .utils import is_ru
+
 
 class DataCollectTerminal(models.Model):
     """Data Collect Terminal"""
@@ -45,6 +48,37 @@ class DataCollectTerminal(models.Model):
     def get_absolute_url(self):
         """Method for getting the absolute path of an instance."""
         return reverse('update_dct_url', kwargs={'slug': self.slug})
+
+    @classmethod
+    def order(cls, order: str):
+        """
+        Sorting terminals by the passed value.
+
+        Returns a QuerySet.
+        """
+        if order == '-number':
+            sorted_data = sorted(cls.objects.all(), reverse=True)
+        elif order == 'user':
+            sorted_data = cls.objects.order_by('user')
+        elif order == '-user':
+                sorted_data = cls.objects.raw(
+                    dedent('''\
+                        SELECT *
+                        FROM dct_datacollectterminal
+                        LEFT JOIN client_client ON user_id=client_client.id
+                        ORDER BY client_client.client DESC NULLS LAST;'''))
+        elif order == 'accum':
+            sorted_data = cls.objects.order_by('accumulator')
+        elif order == '-accum':
+            sorted_data = cls.objects.raw(
+                dedent('''\
+                    SELECT *
+                    FROM dct_datacollectterminal
+                    ORDER BY accumulator_id DESC NULLS LAST;'''))
+        else:
+            sorted_data = sorted(cls.objects.all())
+        return sorted_data
+
 
     class Meta:
         verbose_name_plural = 'ТСД'

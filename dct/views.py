@@ -1,5 +1,3 @@
-from textwrap import dedent
-
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
@@ -26,35 +24,14 @@ class DataCollectTerminalListView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         """
-        Temporarily. Rewrite!!!
-        Sort objects by user, battery number, or truncated name field number.
+        Adds sorted data by user, battery number, or truncated name field
+        number to the context.
+        Adds the value by which the sorting was performed to the context.
         """
         context = super().get_context_data(**kwargs)
-        context['order'] = self.request.GET.get('order', '')
-
-        if context['order'] == '-number':
-            context['datacollectterminal_list'] = sorted(DataCollectTerminal.objects.all(),
-                                                         reverse=True)
-        elif context['order'] == 'user':
-            context['datacollectterminal_list'] = DataCollectTerminal.objects.order_by('user')
-        elif context['order'] == '-user':
-                context['datacollectterminal_list'] = DataCollectTerminal.objects.raw(
-                    dedent('''\
-                        SELECT *
-                        FROM dct_datacollectterminal
-                        LEFT JOIN client_client ON user_id=client_client.id
-                        ORDER BY client_client.client DESC NULLS LAST;'''))
-        elif context['order'] == 'accum':
-            context['datacollectterminal_list'] = \
-                DataCollectTerminal.objects.order_by('accumulator')
-        elif context['order'] == '-accum':
-            context['datacollectterminal_list'] = DataCollectTerminal.objects.raw(
-                dedent('''\
-                    SELECT *
-                    FROM dct_datacollectterminal
-                    ORDER BY accumulator_id DESC NULLS LAST;'''))
-        else:
-            context['datacollectterminal_list'] = sorted(DataCollectTerminal.objects.all())
+        order = self.request.GET.get('order', '')
+        context['order'] = order
+        context['datacollectterminal_list'] = DataCollectTerminal.order(order)
         return context
 
 
@@ -72,7 +49,10 @@ class DataCollectTerminalUpdate(LoginRequiredMixin, ModifiedMethodFormValidMixim
         return context
 
     def get_success_url(self):
-        """Redirects to a page with the sorting that was set when you went to this page."""
+        """
+        Redirects to a page with the sorting that was set when you went
+        to this page.
+        """
         order = self.request.GET.get('order', '')
         return f"{reverse_lazy('list_dct_url')}?order={order}"
 
@@ -85,8 +65,8 @@ class DataCollectTerminalDeleteView(LoginRequiredMixin, DeleteView):
 
     def delete(self, request, *args, **kwargs):
         """
-        Changing the status of the battery to extracted when
-        deleting the terminal.
+        Changing the status of the battery to extracted when deleting
+        the terminal.
         """
         object = self.get_object()
         if object.accumulator:
@@ -100,7 +80,10 @@ class DataCollectTerminalDeleteView(LoginRequiredMixin, DeleteView):
         return context
 
     def get_success_url(self):
-        """Redirects to a page with the sorting that was set when you went to this page."""
+        """
+        Redirects to a page with the sorting that was set when you
+        went to this page.
+        """
         order = self.request.GET.get('order', '')
         return f"{reverse_lazy('list_dct_url')}?order={order}"
 
