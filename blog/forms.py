@@ -20,9 +20,9 @@ class TagForm(forms.ModelForm):
 
         if new_title == 'create':
             raise ValidationError("Тэг не может быть - 'Create'")
-        elif Tag.objects.filter(title__iexact=new_title).count():
+        elif Tag.objects.filter(title__iexact=new_title).exists():
             raise ValidationError("Тэг '{}' уже существует".format(new_title))
-        elif Tag.objects.filter(slug__iexact=en_new_slug).count():
+        elif Tag.objects.filter(slug__iexact=en_new_slug).exists():
             raise ValidationError("Тэг '{}' уже существует, попробуйте найти его в латинице".format(new_title))
         return new_title
 
