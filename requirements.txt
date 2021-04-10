@@ -1,4 +1,6 @@
 asgiref==3.3.1
+beautifulsoup4==4.9.3
+bs4==0.0.1
 Django==3.1.5
 django-ckeditor==6.0.0
 django-js-asset==1.2.2
@@ -6,4 +8,5 @@ Pillow==8.1.0
 psycopg2-binary==2.8.6
 python-dotenv==0.15.0
 pytz==2020.5
+soupsieve==2.2.1
 sqlparse==0.4.1
