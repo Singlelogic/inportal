@@ -1,5 +1,4 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic.base import TemplateView
@@ -17,6 +16,16 @@ class DataCollectTerminalCreateView(LoginRequiredMixin, ModifiedMethodFormValidM
     template_name = 'dct/datacollectterminal_create.html'
     form_class = DataCollectTerminalCreateForm
     success_url = reverse_lazy('list_dct_url')
+
+    def get_form(self, form_class=DataCollectTerminalUpdateForm, **kwargs):
+        """
+        Excluded from the drop-down list of decommissioned batteries,
+        batteries linked to other terminals.
+        """
+        form = super().get_form(**kwargs)
+        qs = DataCollectTerminal.get_special_queryset()
+        form.fields['accumulator'].queryset = qs
+        return form
 
 
 class DataCollectTerminalListView(LoginRequiredMixin, ListView):
@@ -63,9 +72,8 @@ class DataCollectTerminalUpdate(LoginRequiredMixin, ModifiedMethodFormValidMixim
         batteries linked to other terminals.
         """
         form = super().get_form(**kwargs)
-        dct = self.object
-        q = Q(debited=False) & (Q(datacollectterminal__isnull=True) | Q(datacollectterminal=dct))
-        form.fields['accumulator'].queryset = Accumulator.objects.filter(q)
+        qs = DataCollectTerminal.get_special_queryset(self.object)
+        form.fields['accumulator'].queryset = qs
         return form
 
 
