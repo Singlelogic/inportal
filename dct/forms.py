@@ -24,3 +24,7 @@ class DataCollectTerminalUpdateForm(forms.ModelForm):
         widgets = {
             'name': forms.TextInput(attrs={'placeholder': 'ТСД-1'}),
         }
+        help_texts = {
+            'accumulator': 'Исключены списанные и привязанные к другим ТСД аккумуляторы',
+            'user': 'Исключены пользователи, к которым привязаны другие ТСД'
+        }
