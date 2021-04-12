@@ -81,17 +81,21 @@ class DataCollectTerminal(models.Model):
         return sorted_data
 
     @classmethod
-    def get_special_queryset(cls, dct=None):
+    def get_special_queryset(cls, dct=None, user=None):
         """
         Excluded from the drop-down list of decommissioned batteries,
         batteries linked to other terminals.
         The battery connected to this terminal is included in the list
         if the terminal already exists.
+        Excludes from the list of users to which the terminal is already linked.
 
-        Returns a QuerySet.
+        Returns a dictionary QuerySet.
         """
-        q = Q(debited=False) & (Q(datacollectterminal__isnull=True) | Q(datacollectterminal=dct))
-        qs = Accumulator.objects.filter(q)
+        qs = {}
+        q_accum = Q(debited=False) & (Q(datacollectterminal__isnull=True) | Q(datacollectterminal=dct))
+        qs['qs_accum'] = Accumulator.objects.filter(q_accum)
+        q_user = Q(datacollectterminal__isnull=True) | Q(client=user)
+        qs['qs_user'] = Client.objects.filter(q_user)
         return qs
 
     class Meta:

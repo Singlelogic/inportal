@@ -21,10 +21,12 @@ class DataCollectTerminalCreateView(LoginRequiredMixin, ModifiedMethodFormValidM
         """
         Excluded from the drop-down list of decommissioned batteries,
         batteries linked to other terminals.
+        Excludes from the list of users to which the terminal is already linked.
         """
         form = super().get_form(**kwargs)
         qs = DataCollectTerminal.get_special_queryset()
-        form.fields['accumulator'].queryset = qs
+        form.fields['accumulator'].queryset = qs.get('qs_accum')
+        form.fields['user'].queryset = qs.get('qs_user')
         return form
 
 
@@ -70,10 +72,12 @@ class DataCollectTerminalUpdate(LoginRequiredMixin, ModifiedMethodFormValidMixim
         """
         Excluded from the drop-down list of decommissioned batteries,
         batteries linked to other terminals.
+        Excludes from the list of users to which the terminal is already linked.
         """
         form = super().get_form(**kwargs)
-        qs = DataCollectTerminal.get_special_queryset(self.object)
-        form.fields['accumulator'].queryset = qs
+        qs = DataCollectTerminal.get_special_queryset(self.object, self.object.user)
+        form.fields['accumulator'].queryset = qs.get('qs_accum')
+        form.fields['user'].queryset = qs.get('qs_user')
         return form
 
 
