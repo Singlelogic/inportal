@@ -5,20 +5,73 @@
 {% endblock %}
 
 {% block content %}
-    <h6><a href="{% url 'create_accumulator_url' %}">Добавить аккумулятор</a></h6>
+    <h6><a href="{% url 'create_accumulator_url' %}?order={{ order }}&filtering={{ filtering }}">
+        Добавить аккумулятор</a></h6>
+    Фильтровать по:
+        {% if filtering == 'debited' %}
+            <a href="?order={{ order }}" style="color: black"
+               class="without_underscores">Списанные</a>
+        {% else %}
+            <a href="?order={{ order }}&filtering=debited" style="color: gray"
+               class="without_underscores">Списанные</a>
+        {% endif %}
+
+        {% if filtering == '-debited' %}
+            <a href="?order={{ order }}" style="color: black"
+               class="without_underscores">Не списанные</a>
+        {% else %}
+            <a href="?order={{ order }}&filtering=-debited" style="color: gray"
+               class="without_underscores">Не списанные</a>
+        {% endif %}
 
     <table class="table">
         <thead class="thead-light">
             <tr>
-                <th>Номер</th>
+
+                {% if order == 'number' %}
+                <th>
+                    <a href="?order=-number&filtering={{ filtering }}" class="without_underscores" style="color: black">
+                        Номер<img class="arrow" src="/static/down_arrow.png" alt="v">
+                    </a>
+                </th>
+                {% elif order == '-number' %}
+                <th>
+                    <a href="?order=number&filtering={{ filtering }}" class="without_underscores" style="color: black">
+                        Номер<img class="arrow" src="/static/up_arrow.png" alt="^">
+                    </a>
+                </th>
+                {% elif not order %}
+                <th>
+                    <a href="?order=-number&filtering={{ filtering }}" class="without_underscores" style="color: black">
+                        Номер<img class="arrow" src="/static/down_arrow.png" alt="v">
+                    </a>
+                </th>
+                {% else %}
+                <th>
+                    <a href="?order=number&filtering={{ filtering }}" class="without_underscores" style="color: black">
+                        Номер<img class="arrow" src="/static/down_arrow_grey.png" alt="v" style="color: grey">
+                    </a>
+                </th>
+                {% endif %}
+
                 <th>Примечание</th>
             </tr>
         </thead>
         <tbody>
             {% for accumulator in accumulator_list %}
                 <tr>
-                    <td><h6><a href="{% url 'update_accumulator_url' pk=accumulator.pk %}">{{ accumulator.number }}</a></h6></td>
-                    <td><p>{{ accumulator.remark }}</p></td>
+                    <td>
+                        <h6>
+                            <a href="{% url 'update_accumulator_url' pk=accumulator.pk %}?order={{ order }}&filtering={{ filtering }}">
+                                {{ accumulator.number }}
+                            </a>
+                        </h6>
+                    </td>
+                    <td>
+                        <p>
+                            {{ accumulator.remark }}
+                        </p>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>

@@ -165,6 +165,21 @@ class Accumulator(models.Model):
             return sum
         return 0
 
+    @classmethod
+    def get_special_queryset(cls, order=None, filtering=None):
+        """Get a special queryset."""
+        qs = Accumulator.objects.all()
+        if filtering:
+            filters = filtering.split()
+            for filter_ in filters:
+                if filter_ == 'debited':
+                    qs = qs.filter(debited=True)
+                if filter_ == '-debited':
+                    qs = qs.filter(debited=False)
+        if order == '-number':
+            qs = qs.order_by('-number')
+        return qs
+
 
 class AccumulatorDate(models.Model):
     """
