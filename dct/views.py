@@ -6,7 +6,7 @@ from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from .forms import DataCollectTerminalCreateForm, DataCollectTerminalUpdateForm
-from .mixins import ModifiedMethodFormValidMixim
+from .mixins import ModifiedMethodFormValidMixim, SuccessURLAccumMixin
 from .models import DataCollectTerminal, Accumulator
 
 
@@ -112,18 +112,11 @@ class DataCollectTerminalDeleteView(LoginRequiredMixin, DeleteView):
         return f"{reverse_lazy('list_dct_url')}?order={order}"
 
 
-class AccumulatorCreateView(LoginRequiredMixin, CreateView):
+class AccumulatorCreateView(LoginRequiredMixin, SuccessURLAccumMixin, CreateView):
     """Create accumulator."""
     model = Accumulator
     template_name = 'dct/accumulator_create.html'
     fields = ['number', 'debited', 'remark']
-
-    def get_success_url(self):
-        """Redirection with inherited sorting and filtering after a successful save."""
-        order = self.request.GET.get('order', '')
-        filtering = self.request.GET.get('filtering', '')
-        query_string = f"order={order}&filtering={filtering}"
-        return f"{reverse_lazy('list_accumulator_url')}?{query_string}"
 
     def get_context_data(self, **kwargs):
         """Adding sorting and filtering data to the context."""
@@ -151,18 +144,11 @@ class AccumulatorListView(LoginRequiredMixin, ListView):
         return context
 
 
-class AccumulatorUpdateView(LoginRequiredMixin, UpdateView):
+class AccumulatorUpdateView(LoginRequiredMixin, SuccessURLAccumMixin, UpdateView):
     """Update the selected accumulator."""
     model = Accumulator
     template_name = 'dct/accumulator_update.html'
     fields = ['number', 'debited', 'remark']
-
-    def get_success_url(self):
-        """Redirection with inherited sorting and filtering after a successful update."""
-        order = self.request.GET.get('order', '')
-        filtering = self.request.GET.get('filtering', '')
-        query_string = f"order={order}&filtering={filtering}"
-        return f"{reverse_lazy('list_accumulator_url')}?{query_string}"
 
     def get_context_data(self, **kwargs):
         """Adding sorting and filtering data to the context."""
@@ -174,18 +160,10 @@ class AccumulatorUpdateView(LoginRequiredMixin, UpdateView):
         return context
 
 
-class AccumulatorDeleteView(LoginRequiredMixin, DeleteView):
+class AccumulatorDeleteView(LoginRequiredMixin, SuccessURLAccumMixin, DeleteView):
     """Delete accumulator."""
     model = Accumulator
     template_name = 'dct/accumulator_delete.html'
-    success_url = reverse_lazy('list_accumulator_url')
-
-    def get_success_url(self):
-        """Redirection with inherited sorting and filtering after a successful deletion."""
-        order = self.request.GET.get('order', '')
-        filtering = self.request.GET.get('filtering', '')
-        query_string = f"order={order}&filtering={filtering}"
-        return f"{reverse_lazy('list_accumulator_url')}?{query_string}"
 
     def get_context_data(self, **kwargs):
         """Adding sorting and filtering data to the context."""

@@ -1,3 +1,4 @@
+from django.urls import reverse_lazy
 from django.utils import timezone
 from django.views.generic.edit import ModelFormMixin
 
@@ -63,3 +64,16 @@ class ModifiedMethodFormValidMixim(ModelFormMixin):
                     DataCollectTerminalRemark.objects.create(data_collect_terminal=dct,
                                                              remark=remark_in_form,
                                                              date=timezone.now())
+
+
+class SuccessURLAccumMixin():
+    """Redirection with inherited sorting and filtering."""
+    def get_success_url(self):
+        """
+        Redirection with inherited sorting and filtering
+        after successful save/update/delete.
+        """
+        order = self.request.GET.get('order', '')
+        filtering = self.request.GET.get('filtering', '')
+        query_string = f"order={order}&filtering={filtering}"
+        return f"{reverse_lazy('list_accumulator_url')}?{query_string}"
