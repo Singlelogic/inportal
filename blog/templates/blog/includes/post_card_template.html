@@ -5,6 +5,8 @@
 
             {% if post.image_preview %}
                 <img class="center-pic card-img preview" src="{{ post.image_preview.url }}">
+            {% else %}
+                <img class="center-pic card-img preview" src="/static/no_image.jpg">
             {% endif %}
 
         </div>

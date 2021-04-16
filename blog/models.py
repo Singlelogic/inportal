@@ -20,7 +20,8 @@ class Post(models.Model):
                                   verbose_name='Тэг')
     date_pub = models.DateTimeField(auto_now_add=True,
                                     verbose_name='Дата публикации')
-    image_preview = models.ImageField(upload_to='images/', verbose_name='Изображение')
+    image_preview = models.ImageField(upload_to='images/', verbose_name='Изображение',
+                                      null=True, blank=True)
 
     def __str__(self):
         return self.title

@@ -10,13 +10,10 @@
     </h4>
 
     {% if post.image_preview %}
-        <img class="post" src="{{ post.image_preview.url }}">
+        <img class="post" src="{{ post.image_preview.url }}"><br>
     {% endif %}
-    <br>
 
-    <p>
-        {{ post.body|safe }}
-    </p><br>
+    <p>{{ post.body|safe }}</p><br>
 
     {% if post.user == request.user %}
     <p>
