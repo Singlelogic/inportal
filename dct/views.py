@@ -8,6 +8,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .forms import DataCollectTerminalCreateForm, DataCollectTerminalUpdateForm
 from .mixins import ModifiedMethodFormValidMixim, SuccessURLAccumMixin
 from .models import DataCollectTerminal, Accumulator
+from .utils import add_order_filter_context
 
 
 class DataCollectTerminalCreateView(LoginRequiredMixin, ModifiedMethodFormValidMixim, CreateView):
@@ -121,10 +122,7 @@ class AccumulatorCreateView(LoginRequiredMixin, SuccessURLAccumMixin, CreateView
     def get_context_data(self, **kwargs):
         """Adding sorting and filtering data to the context."""
         context = super().get_context_data(**kwargs)
-        filtering = self.request.GET.get('filtering', '')
-        context['filtering'] = filtering
-        order = self.request.GET.get('order', '')
-        context['order'] = order
+        context.update(add_order_filter_context(self.request))
         return context
 
 
@@ -153,10 +151,7 @@ class AccumulatorUpdateView(LoginRequiredMixin, SuccessURLAccumMixin, UpdateView
     def get_context_data(self, **kwargs):
         """Adding sorting and filtering data to the context."""
         context = super().get_context_data(**kwargs)
-        filtering = self.request.GET.get('filtering', '')
-        context['filtering'] = filtering
-        order = self.request.GET.get('order', '')
-        context['order'] = order
+        context.update(add_order_filter_context(self.request))
         return context
 
 
@@ -168,10 +163,7 @@ class AccumulatorDeleteView(LoginRequiredMixin, SuccessURLAccumMixin, DeleteView
     def get_context_data(self, **kwargs):
         """Adding sorting and filtering data to the context."""
         context = super().get_context_data(**kwargs)
-        filtering = self.request.GET.get('filtering', '')
-        context['filtering'] = filtering
-        order = self.request.GET.get('order', '')
-        context['order'] = order
+        context.update(add_order_filter_context(self.request))
         return context
 
 

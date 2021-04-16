@@ -15,3 +15,13 @@ def is_ru(name: str) -> str:
             if letter in dictionary:
                 name = name.replace(letter, dictionary[letter])
     return name
+
+
+def add_order_filter_context(request):
+    """Adding sorting and filtering data."""
+    context = {}
+    filtering = request.GET.get('filtering', '')
+    context['filtering'] = filtering
+    order = request.GET.get('order', '')
+    context['order'] = order
+    return context
