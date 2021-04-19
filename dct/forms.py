@@ -9,7 +9,10 @@ from .models import DataCollectTerminal
 class DataCollectTerminalCreateForm(forms.ModelForm):
     name = forms.CharField(label='Наименование',
                            validators=[validators.RegexValidator(regex='^ТСД-\d+$')],
-                           error_messages={'invalid': 'Некорректное название (пример названия: ТСД-1)'},
+                           error_messages={
+                               'invalid': 'Некорректное название (пример названия: ТСД-1)',
+                               'unique': 'ТСД с таким наименованием уже существует.'
+                           },
                            widget=forms.TextInput(attrs={'placeholder': 'ТСД-1'}))
 
     class Meta:
@@ -21,7 +24,6 @@ class DataCollectTerminalCreateForm(forms.ModelForm):
             'user': 'Исключены пользователи, к которым привязаны другие ТСД'
         }
         error_messages = {
-            'name': {'unique': 'ТСД с таким наименованием уже существует.'},
             'serial_number': {'unique': 'ТСД с таким серийным номером уже существует.'},
             'mac_address': {'unique': 'ТСД с таким MAC-адресом уже существует.'}
         }
