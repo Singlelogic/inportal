@@ -19,7 +19,7 @@
                     <div class="alert-danger" role="alert">{{ field.errors }}</div>
                     {% endif %}
                     {{ field }}
-                    <br><span class="helptext">{{ field.help_text }}</span>
+                    <br><span class="helptext text-secondary">{{ field.help_text }}</span>
                 </td>
             </tr>
             {% endfor %}
@@ -27,7 +27,8 @@
         {% if datacollectterminal.accumulator %}
             <p><h6><b>Колличество отработанных дней АКБ: {{ datacollectterminal.accumulator.lifetime }}</b></h6></p>
         {% endif %}
-        <p><a href="{% url 'list_dctremark_url' slug=object.slug %}">Показать историю примечаний</a> </p>
+        <p><a href="{% url 'list_dctremark_url' slug=object.slug %}" class="btn btn-outline-primary btn-sm">
+            Показать историю примечаний</a></p>
         <a href="{% url 'list_dct_url' %}?order={{ order }}" class="btn btn-secondary bottom-10px">Назад</a>
         <input type="submit" value="Сохранить" class="btn btn-secondary bottom-10px">
         <a href="{% url 'delete_dct_url' slug=object.slug %}?order={{ order }}" class="btn btn-danger bottom-10px">Удалить</a>

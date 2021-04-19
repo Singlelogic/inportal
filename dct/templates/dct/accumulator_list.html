@@ -5,7 +5,8 @@
 {% endblock %}
 
 {% block content %}
-    <h6><a href="{% url 'create_accumulator_url' %}?order={{ order }}&filtering={{ filtering }}">
+    <h6><a href="{% url 'create_accumulator_url' %}?order={{ order }}&filtering={{ filtering }}"
+           class="btn btn-outline-primary btn-sm">
         Добавить аккумулятор</a></h6>
     Фильтровать по:
         {% if filtering == 'debited' %}
@@ -24,7 +25,7 @@
                class="without_underscores">Не списанные</a>
         {% endif %}
 
-    <table class="table">
+    <table class="table table-striped">
         <thead class="thead-light">
             <tr>
 
