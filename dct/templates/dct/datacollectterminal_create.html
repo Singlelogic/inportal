@@ -9,7 +9,20 @@
     <form method="post">
         {% csrf_token %}
         <table>
-            {{ form.as_table }}
+            {% for field in form %}
+                <tr>
+                    <th>
+                        {{ field.label }}
+                    </th>
+                    <td>
+                        {% if field.errors %}
+                            <div class="alert-danger" role="alert">{{ field.errors }}</div>
+                        {% endif %}
+                        {{ field }}
+                        <br><span class="helptext">{{ field.help_text }}</span>
+                    </td>
+                </tr>
+            {% endfor %}
         </table>
         <input class="bottom-10px" type="submit" value="Добавить">
     </form>

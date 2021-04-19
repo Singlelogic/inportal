@@ -16,7 +16,11 @@ class DataCollectTerminalCreateForm(forms.ModelForm):
             'accumulator': 'Исключены списанные и привязанные к другим ТСД аккумуляторы',
             'user': 'Исключены пользователи, к которым привязаны другие ТСД'
         }
-        error_messages = {'name': {'unique': 'ТСД с таким наименованием уже существует.'}}
+        error_messages = {
+            'name': {'unique': 'ТСД с таким наименованием уже существует.'},
+            'serial_number': {'unique': 'ТСД с таким серийным номером уже существует.'},
+            'mac_address': {'unique': 'ТСД с таким MAC-адресом уже существует.'}
+        }
 
 
 class DataCollectTerminalUpdateForm(forms.ModelForm):
@@ -32,4 +36,8 @@ class DataCollectTerminalUpdateForm(forms.ModelForm):
         help_texts = {
             'accumulator': 'Исключены списанные и привязанные к другим ТСД аккумуляторы',
             'user': 'Исключены пользователи, к которым привязаны другие ТСД'
+        }
+        error_messages = {
+            'serial_number': {'unique': 'ТСД с таким серийным номером уже существует.'},
+            'mac_address': {'unique': 'ТСД с таким MAC-адресом уже существует.'}
         }
