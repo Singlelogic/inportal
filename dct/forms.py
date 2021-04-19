@@ -16,6 +16,7 @@ class DataCollectTerminalCreateForm(forms.ModelForm):
             'accumulator': 'Исключены списанные и привязанные к другим ТСД аккумуляторы',
             'user': 'Исключены пользователи, к которым привязаны другие ТСД'
         }
+        error_messages = {'name': {'unique': 'ТСД с таким наименованием уже существует.'}}
 
 
 class DataCollectTerminalUpdateForm(forms.ModelForm):
