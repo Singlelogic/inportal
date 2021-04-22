@@ -91,13 +91,13 @@ class DataCollectTerminalDeleteView(LoginRequiredMixin, DeleteView):
         Changing the status of the battery to extracted when deleting
         the terminal.
         """
-        object = self.get_object()
-        if object.accumulator:
-            object.accumulator.changed_status(2)
+        dct = self.get_object()
+        if dct.accumulator:
+            dct.accumulator.changed_status(2)
         return super().delete(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
-        """Adding a sortation order to the context."""
+        """Adding a sorting order to the context."""
         context = super().get_context_data(**kwargs)
         context['order'] = self.request.GET.get('order', '')
         return context
