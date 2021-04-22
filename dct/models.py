@@ -62,12 +62,12 @@ class DataCollectTerminal(models.Model):
         elif order == 'user':
             sorted_data = cls.objects.order_by('user')
         elif order == '-user':
-                sorted_data = cls.objects.raw(
-                    dedent('''\
-                        SELECT *
-                        FROM dct_datacollectterminal
-                        LEFT JOIN client_client ON user_id=client_client.id
-                        ORDER BY client_client.client DESC NULLS LAST;'''))
+            sorted_data = cls.objects.raw(
+                dedent('''\
+                    SELECT *
+                    FROM dct_datacollectterminal
+                    LEFT JOIN client_client ON user_id=client_client.id
+                    ORDER BY client_client.client DESC NULLS LAST;'''))
         elif order == 'accum':
             sorted_data = cls.objects.order_by('accumulator')
         elif order == '-accum':
@@ -150,19 +150,19 @@ class Accumulator(models.Model):
 
     def lifetime(self) -> int:
         """Returns the number of days worked by the battery."""
-        sum = 0
+        sum_ = 0
         if self.accumulatordate_set.all():
-            for i in self.accumulatordate_set.all():
-                if i.state == 1:
-                    start = i.date
+            for accumulator_date in self.accumulatordate_set.all():
+                if accumulator_date.state == 1:
+                    start = accumulator_date.date
                 else:
-                    stop = i.date
+                    stop = accumulator_date.date
                     delta = stop - start
-                    sum += delta.days
-            if i.state == 1:
+                    sum_ += delta.days
+            if accumulator_date.state == 1:
                 delta = timezone.now() - start
-                sum += delta.days
-            return sum
+                sum_ += delta.days
+            return sum_
         return 0
 
     @classmethod

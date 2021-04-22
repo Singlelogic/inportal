@@ -42,7 +42,8 @@ class ModifiedMethodFormValidMixim(ModelFormMixin):
             if accum_in_form:
                 accum_in_form.changed_status(1)
 
-    def data_collect_terminal_remark(self, form):
+    @staticmethod
+    def data_collect_terminal_remark(form):
         """Remark for data collect terminal."""
         remark_in_form = form.cleaned_data['remark']
         # If this terminal already exists

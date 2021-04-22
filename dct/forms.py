@@ -8,7 +8,7 @@ from .models import DataCollectTerminal
 
 class DCTForm(forms.ModelForm):
     name = forms.CharField(label='Наименование',
-                           validators=[validators.RegexValidator(regex='^ТСД-\d+$')],
+                           validators=[validators.RegexValidator(regex=r'^ТСД-\d+$')],
                            error_messages={
                                'invalid': 'Некорректное название (пример названия: ТСД-1)',
                                'unique': 'ТСД с таким наименованием уже существует.'
