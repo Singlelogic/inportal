@@ -5,7 +5,7 @@ from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
-from .forms import DataCollectTerminalCreateForm, DataCollectTerminalUpdateForm
+from .forms import DCTForm
 from .mixins import ModifiedMethodFormValidMixim, SuccessURLAccumMixin
 from .models import DataCollectTerminal, Accumulator
 from .utils import add_order_filter_context
@@ -15,10 +15,10 @@ class DataCollectTerminalCreateView(LoginRequiredMixin, ModifiedMethodFormValidM
     """Create data collection terminal."""
     model = DataCollectTerminal
     template_name = 'dct/datacollectterminal_create.html'
-    form_class = DataCollectTerminalCreateForm
+    form_class = DCTForm
     success_url = reverse_lazy('list_dct_url')
 
-    def get_form(self, form_class=DataCollectTerminalUpdateForm, **kwargs):
+    def get_form(self, form_class=DCTForm, **kwargs):
         """
         Excluded from the drop-down list of decommissioned batteries,
         batteries linked to other terminals.
@@ -52,8 +52,7 @@ class DataCollectTerminalUpdate(LoginRequiredMixin, ModifiedMethodFormValidMixim
     """Update the selected data collection terminal."""
     model = DataCollectTerminal
     template_name = 'dct/datacollectterminal_update.html'
-    success_url = reverse_lazy('list_dct_url')
-    form_class = DataCollectTerminalUpdateForm
+    form_class = DCTForm
 
     def get_context_data(self, **kwargs):
         """Adding a sortation order to the context."""
@@ -69,7 +68,7 @@ class DataCollectTerminalUpdate(LoginRequiredMixin, ModifiedMethodFormValidMixim
         order = self.request.GET.get('order', '')
         return f"{reverse_lazy('list_dct_url')}?order={order}"
 
-    def get_form(self, form_class=DataCollectTerminalUpdateForm, **kwargs):
+    def get_form(self, form_class=DCTForm, **kwargs):
         """
         Excluded from the drop-down list of decommissioned batteries,
         batteries linked to other terminals.
@@ -86,7 +85,6 @@ class DataCollectTerminalDeleteView(LoginRequiredMixin, DeleteView):
     """Delete data collection terminal."""
     model = DataCollectTerminal
     template_name = 'dct/datacollectterminal_delete.html'
-    success_url = reverse_lazy('list_dct_url')
 
     def delete(self, request, *args, **kwargs):
         """
