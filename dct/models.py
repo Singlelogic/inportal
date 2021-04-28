@@ -1,7 +1,8 @@
 from textwrap import dedent
 
 from django.db import models
-from django.db.models import Q
+from django.db.models import Q, F, Value
+from django.db.models.functions import Concat
 from django.urls import reverse
 from django.utils import timezone
 
@@ -69,7 +70,11 @@ class DataCollectTerminal(models.Model):
                     LEFT JOIN client_client ON user_id=client_client.id
                     ORDER BY client_client.client DESC NULLS LAST;'''))
         elif order == 'accum':
-            sorted_data = cls.objects.order_by('accumulator')
+            # sorted_data = cls.objects.order_by('accumulator')
+            word = 'tsd-2 8354520800990'
+            # sorted_data = cls.objects.raw("SELECT * FROM dct_datacollectterminal WHERE CONCAT(slug, ' ', serial_number) LIKE %s", [word])
+            sorted_data = cls.objects.annotate(full_name=Concat(F('slug'), Value(' '), F('serial_number'))).filter(
+                full_name__icontains=word)
         elif order == '-accum':
             sorted_data = cls.objects.raw(
                 dedent('''\
