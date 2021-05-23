@@ -8,3 +8,4 @@ test.py
 venv/
 staticfiles/
 local_settings.py
+backups
